@@ -26,12 +26,7 @@ def run(playwright: Playwright): # TODO : make a BrowserController class for pla
 
     all_movies_list = ul_locator.locator("> li").all()
 
-    first_5_movies = []
-    for m in all_movies_list: # TODO : refactor this with list comprehension or list slicing.
-        if len(first_5_movies) < 5:
-            first_5_movies.append(m)
-        else:
-            break
+    first_5_movies = all_movies_list[:5]
 
     print(
         len(first_5_movies)
