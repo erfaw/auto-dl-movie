@@ -7,7 +7,7 @@ IMDB_WL_URL = r"https://www.imdb.com/user/p.rihuzvwcddwbnucg76npzg62m4/watchlist
 CHROME_PATH = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
 
 
-def run(playwright: Playwright):
+def run(playwright: Playwright): # TODO : make a BrowserController class for playwright stuff.
     chrome = playwright.chromium
     context = chrome.launch(
         executable_path=CHROME_PATH,
@@ -27,7 +27,7 @@ def run(playwright: Playwright):
     all_movies_list = ul_locator.locator("> li").all()
 
     first_5_movies = []
-    for m in all_movies_list:
+    for m in all_movies_list: # TODO : refactor this with list comprehension or list slicing.
         if len(first_5_movies) < 5:
             first_5_movies.append(m)
         else:
