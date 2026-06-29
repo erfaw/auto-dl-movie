@@ -11,25 +11,32 @@ def run(playwright: Playwright):
     chrome = playwright.chromium
     context = chrome.launch(
         executable_path=CHROME_PATH,
-        headless=False,
+        headless=False, # TODO : comment it and check when development was done.
     )
 
     page = context.new_page()
 
     page.goto(url=IMDB_WL_URL)
 
-    all_movies_list = page.locator(".ipc-metadata-list-summary-item").all()
+    UL_XPATH = (
+        r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul'
+    )
+    ul_locator = page.locator(UL_XPATH)
+    ul_locator.wait_for()
+
+    all_movies_list = ul_locator.locator("> li").all()
 
     first_5_movies = []
-
     for m in all_movies_list:
-        if len(first_5_movies) < 6:
+        if len(first_5_movies) < 5:
             first_5_movies.append(m)
         else:
             break
 
-    input()
-
+    print(
+        len(first_5_movies)
+    )
 
 with sync_playwright() as pw:
     run(pw)
+    input("press any key to close")
