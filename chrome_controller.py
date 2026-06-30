@@ -11,6 +11,8 @@ class ChromeController:
         """
         A Chrome based controller powered by `Playwright` based on a main page to explore and automize some basic works.
 
+        It automaticly `start()`.
+
         Args:
             chrome_path (:obj:`Path`): Path to `chrome.exe` file on system .
 
@@ -18,6 +20,7 @@ class ChromeController:
             None
         """
         self.chrome_path = chrome_path
+        self.start()
 
     def start(self):
         """
