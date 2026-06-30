@@ -1,4 +1,7 @@
 class ChromeController:
+    """
+    A controller for Chrome which could do stuff with empowerment of `Playwright`.
+    """
     def __init__(self) -> None:
         pass
 
