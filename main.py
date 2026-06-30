@@ -1,37 +1,27 @@
-from playwright.sync_api import Playwright, sync_playwright
 from pathlib import Path
+from chrome_controller import ChromeController
 
 IMDB_WL_URL = r"https://www.imdb.com/user/p.rihuzvwcddwbnucg76npzg62m4/watchlist/?ref_=ext_shr_lnk"
 
 # BASE_DIR = Path(__name__).as_posix()
 CHROME_PATH = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
 
+chrome = ChromeController(CHROME_PATH)
+chrome.start()
+UL_XPATH = (
+    r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul'
+)
+chrome.main_page.goto(url=IMDB_WL_URL)
 
-def run(playwright: Playwright): # TODO : make a BrowserController class for playwright stuff.
-    chrome = playwright.chromium
-    context = chrome.launch(
-        executable_path=CHROME_PATH,
-        headless=False, # TODO : comment it and check when development was done.
-    )
+input("Press anything to close.")
 
-    page = context.new_page()
 
-    page.goto(url=IMDB_WL_URL)
+#     ul_locator = page.locator(UL_XPATH)
+#     ul_locator.wait_for()
 
-    UL_XPATH = (
-        r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul'
-    )
-    ul_locator = page.locator(UL_XPATH)
-    ul_locator.wait_for()
+#     all_movies_list = ul_locator.locator("> li").all()
 
-    all_movies_list = ul_locator.locator("> li").all()
+#     first_5_movies = all_movies_list[:5]
 
-    first_5_movies = all_movies_list[:5]
+#     print(len(first_5_movies))
 
-    print(
-        len(first_5_movies)
-    )
-
-with sync_playwright() as pw:
-    run(pw)
-    input("press any key to close")
