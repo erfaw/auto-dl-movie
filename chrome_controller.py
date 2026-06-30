@@ -46,7 +46,7 @@ class ChromeController:
             ul_selector: XPath or css selector of some element in DOM.
 
         Returns:
-            list:
+            list[dict]: return a list of dicts contain movies detail.
         """
         ul_continer = self.main_page.locator(ul_selector)
         ul_continer.wait_for()
