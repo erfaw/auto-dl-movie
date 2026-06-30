@@ -13,7 +13,7 @@ class ChromeController:
 
         Args:
             chrome_path (:obj:`Path`): Path to `chrome.exe` file on system .
-        
+
         Returns:
             None
         """
@@ -37,9 +37,6 @@ class ChromeController:
         run `stop()` on `self.pw`.
         """
         self.pw.stop()
-
-    def make_page(self):
-        pass
 
     def get_movies_list(self):
         pass
