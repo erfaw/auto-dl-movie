@@ -77,3 +77,12 @@ class ChromeController:
             r_movie.append(d)
 
         return r_movie
+
+    def get_dl_link(self):
+        pass 
+        # TODO : get a movie dict and search in donyaye serial for download links. then return it.
+
+    def dl_movie(self):
+        pass 
+        # TODO : Think about dl with browser or requests.py or automate adding it to IDM with PyAutoGUI.
+        # TODO : proceed download from links passed into. must be streaming way. or read about how is it inside playwright.
