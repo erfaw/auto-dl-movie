@@ -5,7 +5,6 @@ import subprocess as sp
 from consts import (
     CHROME_PATH,
     URLS,
-    SEARCH_INPUT_XPATH,
     SAVE_DIR,
     XPATH
 )
@@ -15,7 +14,7 @@ downloader = Downloader()
 
 chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"])
-movies_dl_links = chrome.get_dl_link(URLS, SEARCH_INPUT_XPATH, movies)
+movies_dl_links = chrome.get_dl_link(URLS, XPATH["donyaye_serial"]["search_input"], movies)
 chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
