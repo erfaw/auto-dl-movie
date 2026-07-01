@@ -44,3 +44,15 @@ how to add docstring to different ascpect of code like `class`, `module`, `varia
 I found out there is many tools to document your project through your docstring. 
 
 Of course you can use it when you are at debugging. it so much easier. and other devs could gain better understanding of your code.
+
+---
+
+## [shutil](https://docs.python.org/3/library/shutil.html) built-in package
+
+its most powerfull way to work with files and directories.
+
+helpful methods in first look: 
+1. [shutil.move()](https://docs.python.org/3/library/shutil.html#shutil.move)
+2. [shutil.copy()](https://docs.python.org/3/library/shutil.html#shutil.copy)
+3. [shutil.copytree()](https://docs.python.org/3/library/shutil.html#shutil.copytree)
+4. [shutil.disk_usage()](https://docs.python.org/3/library/shutil.html#shutil.disk_usage)
