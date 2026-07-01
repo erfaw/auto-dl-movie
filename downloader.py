@@ -49,6 +49,8 @@ class Downloader:
         path.mkdir(exist_ok=True)
         file_path = path / file_name
 
+        # TODO : check for 1.existance of file and 2.complete downloaded , then start 
+
         with rq.get(url, stream=True) as response:
             with open(file_path, 'wb') as file:
                 with tqdm(
