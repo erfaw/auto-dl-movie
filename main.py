@@ -33,6 +33,6 @@ search_input_locator.press("Enter")
 
 chrome.main_page.get_by_text('مشاهده لینک ها').click()
 
-chrome.main_page.locator("a[href$='.mkv']").count()
+actual_link = chrome.main_page.locator("a[href$='.mkv']").first.get_attribute("href")
 
 input("Press anything to close.")
