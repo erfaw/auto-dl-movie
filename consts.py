@@ -16,7 +16,8 @@ XPATH = {
     },
     "donyaye_serial": {
         "dynamic_archive": {
-            "search_input": r"xpath=/html/body/div/div[2]/input"
+            "search_input": r"xpath=/html/body/div/div[2]/input",
+            "show_links_btn_text": r"مشاهده لینک ها",
         },
     },
 }

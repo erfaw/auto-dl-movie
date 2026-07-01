@@ -78,7 +78,7 @@ class ChromeController:
 
         return r_movie
 
-    def get_dl_link(self, urls: dict, search_xpath: str, movies: list[dict]) -> dict:
+    def get_dl_link(self, urls: dict, movies: list[dict], search_xpath: str, show_links_btn_text: str) -> dict:
         """
         Get all download links from particular page in `Donyaye Serial` website archive.
 
@@ -109,7 +109,7 @@ class ChromeController:
         self.main_page.goto(urls["donyaye_serial"]["dynamic_archive"])
 
         search_input_locator = self.main_page.locator(search_xpath)
-        show_links_btn_locator = self.main_page.get_by_text("مشاهده لینک ها")
+        show_links_btn_locator = self.main_page.get_by_text(show_links_btn_text)
 
         links = {}
         for m in movies:

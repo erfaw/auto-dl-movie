@@ -14,7 +14,12 @@ downloader = Downloader()
 
 chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])
-movies_dl_links = chrome.get_dl_link(URLS, XPATH["donyaye_serial"]['dynamic_archive']["search_input"], movies)
+movies_dl_links = chrome.get_dl_link(
+    URLS,
+    movies,
+    XPATH["donyaye_serial"]["dynamic_archive"]["search_input"],
+    XPATH["donyaye_serial"]["dynamic_archive"]["show_links_btn_text"],
+)
 chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
