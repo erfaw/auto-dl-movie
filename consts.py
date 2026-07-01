@@ -2,6 +2,12 @@ from pathlib import Path
 
 # BASE_DIR = Path(__name__).as_posix()
 CHROME_PATH = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
+"""Path: point to `chrome.exe` file on your computer. 
+
+This is for usage without `playwright install` stuff. (because we have geoblocked at the moment!)
+
+If it's okay to run that command, feel free to set this to `None` to use default way.
+"""
 
 XPATH = {
     "imdb_wl": {
