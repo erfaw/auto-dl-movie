@@ -1,5 +1,7 @@
 from pathlib import Path
-
+import requests as rq
+from pathlib import Path
+from urllib.parse import unquote
 
 class Downloader:
     """
@@ -17,7 +19,8 @@ class Downloader:
             https://github.com
         """
 
-    def download(self, url: str, path: Path) -> None:
+
+    def get(self, url: str, path: Path) -> None:
         """
         Starting download a file of any type to given path using `stream=True`_ and `Streaming Requests`_ .
 
@@ -37,4 +40,13 @@ class Downloader:
         .. _pathlib.Path():
             https://docs.python.org/3/library/pathlib.html#pathlib.Path
         """
-        pass
+        file_name = unquote(url.split('/')[-1])
+        path.mkdir(exist_ok=True)
+        file_path = path / file_name
+
+        with rq.get(url, stream=True) as response:
+            with open(file_path, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=64*1024):
+                    if chunk :
+                        file.write(chunk)
+
