@@ -30,3 +30,17 @@ with rq.get(url, stream=True) as response:
                     file.write(chunk)
                     pb.update(len(chunk))
 ```
+
+---
+
+## [Google-Style Docstring](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+
+[How to write docstrings in python](https://realpython.com/how-to-write-docstrings-in-python/)
+
+This project somehow was a exercise for me to use docstring more than before.
+
+how to add docstring to different ascpect of code like `class`, `module`, `variable`, `function`, `method`, etc.
+
+I found out there is many tools to document your project through your docstring. 
+
+Of course you can use it when you are at debugging. it so much easier. and other devs could gain better understanding of your code.
