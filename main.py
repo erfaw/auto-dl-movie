@@ -22,17 +22,10 @@ URLs = {
     },
 }
 
-
-chrome.main_page.goto(
-    URLs['donyaye_serial']['dynamic_archive']
-)
 SEARCH_INPUT_XPATH = r'xpath=/html/body/div/div[2]/input'
-search_input_locator = chrome.main_page.locator("xpath=/html/body/div/div[2]/input")
-search_input_locator.fill(f"{movies[0]["name"]} {movies[0]["year"]}")
-search_input_locator.press("Enter")
 
-chrome.main_page.get_by_text('مشاهده لینک ها').click()
+movies_dl_links = chrome.get_dl_link(URLs, SEARCH_INPUT_XPATH, movies)
 
-actual_link = chrome.main_page.locator("a[href$='.mkv']").first.get_attribute("href")
+print(movies_dl_links)
 
 input("Press anything to close.")

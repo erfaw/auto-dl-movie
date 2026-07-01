@@ -78,8 +78,47 @@ class ChromeController:
 
         return r_movie
 
-    def get_dl_link(self):
-        pass 
+    def get_dl_link(self, urls: dict, search_xpath: str, movies: list[dict]) -> dict:
+        """
+        Get all download links from particular page in `Donyaye Serial` website archive.
+
+        Args:
+            urls (dict[dict]): a dict contain link of website archive. where to check. for now it is shit and static!
+            search_xpath (str): raw string to locating search input with `XPATH`.
+            movies (list[dict]): list of dict which must contains `name`, `year`, `directors` of movie.
+            None:
+
+        Examples:
+            urls :
+            >>> URLs = {
+                    "donyaye_serial": {
+                        "one_page_archive": "https://dls2.aparatchi-dlcenter.top/DonyayeSerial/donyaye_serial_all_archive.html",
+                        "dynamic_archive": "https://dls6.aparatchi-dlcenter.top/DonyayeSerial/10_thous.html",
+                    },
+                }
+            search_xpath :
+            >>> r'xpath=/html/body/div/div[2]/input'
+            movies :
+            >>> m = [
+                    {"name": "se7en", "year": "1995", "directors": ['David Fincher']}
+                ]
+
+        Returns:
+            dict: strings of downlaod links of each film.
+        """
+        self.main_page.goto(urls["donyaye_serial"]["dynamic_archive"])
+
+        search_input_locator = self.main_page.locator(search_xpath)
+        search_input_locator.fill(f"{movies[0]["name"]} {movies[0]["year"]}")
+        search_input_locator.press("Enter")
+
+        self.main_page.get_by_text("مشاهده لینک ها").click()
+        return dict(
+            actual_link=self.main_page.locator("a[href$='.mkv']").first.get_attribute(
+                "href"
+            )
+        )
+
         # TODO : get a movie dict and search in donyaye serial for download links. then return it.
 
     def dl_movie(self):
