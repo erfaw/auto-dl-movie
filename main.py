@@ -29,6 +29,8 @@ SEARCH_INPUT_XPATH = r'xpath=/html/body/div/div[2]/input'
 
 movies_dl_links = chrome.get_dl_link(URLs, SEARCH_INPUT_XPATH, movies)
 
+chrome.close()
+
 SAVE_DIR = Path().home() / 'Desktop' / 'auto-movie-downloader'
 SAVE_DIR.mkdir(exist_ok=True)
 
