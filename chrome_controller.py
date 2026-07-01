@@ -123,13 +123,15 @@ class ChromeController:
                 show_links_btn_locator.first.click()
 
                 all_links_locator = self.main_page.locator("a[href$='.mkv']").all()
-
                 all_links = [link.get_attribute('href') for link in all_links_locator]
 
-                # TODO : filter the all_links to get links with 720p and remove dubbed one. which needs a extra check before all and its how many links we have. if there is any but like dubbed, fuck it and download it. 
-                # filtered_list = [ link for link in all_links if link.contains("720")]
+                filtered_links = [ l for l in all_links if "720p" in l and "SoftSub" in l ] # type: ignore
+                if not filtered_links : 
+                    filtered_links = [ l for l in all_links if "720p" in l ] # type: ignore
+                if not filtered_links : 
+                    filtered_links = [all_links[0]]
 
-                links[m['name']] = all_links
+                links[m['name']] = filtered_links
 
         return links
 
