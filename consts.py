@@ -9,7 +9,7 @@ UL_XPATH = (
     r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul'
 )
 
-URLs = {
+URLS = {
     "donyaye_serial": {
         "one_page_archive": "https://dls2.aparatchi-dlcenter.top/DonyayeSerial/donyaye_serial_all_archive.html",
         "dynamic_archive": "https://dls6.aparatchi-dlcenter.top/DonyayeSerial/10_thous.html",

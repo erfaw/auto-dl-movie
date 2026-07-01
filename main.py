@@ -6,7 +6,7 @@ from consts import (
     IMDB_WL_URL,
     CHROME_PATH,
     UL_XPATH,
-    URLs,
+    URLS,
     SEARCH_INPUT_XPATH,
     SAVE_DIR,
 )
@@ -16,7 +16,7 @@ downloader = Downloader()
 
 chrome.main_page.goto(url=IMDB_WL_URL)
 movies = chrome.get_movies_list(UL_XPATH)
-movies_dl_links = chrome.get_dl_link(URLs, SEARCH_INPUT_XPATH, movies)
+movies_dl_links = chrome.get_dl_link(URLS, SEARCH_INPUT_XPATH, movies)
 chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
