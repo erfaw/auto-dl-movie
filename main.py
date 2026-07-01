@@ -30,4 +30,9 @@ SEARCH_INPUT_XPATH = r'xpath=/html/body/div/div[2]/input'
 search_input_locator = chrome.main_page.locator("xpath=/html/body/div/div[2]/input")
 search_input_locator.fill(f"{movies[0]["name"]} {movies[0]["year"]}")
 search_input_locator.press("Enter")
+
+chrome.main_page.get_by_text('مشاهده لینک ها').click()
+
+chrome.main_page.locator("a[href$='.mkv']").count()
+
 input("Press anything to close.")
