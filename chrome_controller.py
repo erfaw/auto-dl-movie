@@ -134,19 +134,3 @@ class ChromeController:
                 links[f"{m['name']} {m['year']}"] = filtered_links
 
         return links
-
-    def dl_movie(self, url: str, save_path: Path):
-        """
-        Download a file with given url and file path to save.
-
-        Args:
-            url (str):string url use for download.
-            save_path (Path):a Path obj for saving file.
-        """
-        pass
-        # with self.main_page.expect_download() as download_info:
-        #     self.main_page.goto(url)
-
-        # download = download_info.value
-
-        # download.save_as(save_path / download.suggested_filename)
