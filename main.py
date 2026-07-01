@@ -26,6 +26,12 @@ SEARCH_INPUT_XPATH = r'xpath=/html/body/div/div[2]/input'
 
 movies_dl_links = chrome.get_dl_link(URLs, SEARCH_INPUT_XPATH, movies)
 
-print(movies_dl_links)
+SAVE_DIR = Path().home() / 'Desktop' / 'auto-movie-downloader'
+SAVE_DIR.mkdir(exist_ok=True)
+
+# for n, l in movies_dl_links.items():
+#     chrome.dl_movie(l[0], SAVE_DIR)
+#     input("Press anything to close.")
+
 
 input("Press anything to close.")
