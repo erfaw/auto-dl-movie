@@ -43,3 +43,10 @@ SAVE_DIR = Path().home() / "Desktop" / "auto-movie-downloader"
 >>> Users/<Your User>/Dekstop/auto-movie-downloader
 
 """
+
+PREFER = {
+    "resolution": "720p",
+    "dub/subtitle": "SoftSub",
+}
+"""dict: some preferation details. so be able to change it from here. 
+"""

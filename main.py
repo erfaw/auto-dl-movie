@@ -6,7 +6,8 @@ from consts import (
     CHROME_PATH,
     URLS,
     SAVE_DIR,
-    XPATH
+    XPATH,
+    PREFER
 )
 
 chrome = ChromeController(CHROME_PATH)
@@ -19,7 +20,9 @@ movies_dl_links = chrome.get_dl_link(
     movies,
     XPATH["donyaye_serial"]["dynamic_archive"]["search_input"],
     XPATH["donyaye_serial"]["dynamic_archive"]["show_links_btn_text"],
-    XPATH["donyaye_serial"]["dynamic_archive"]["mkv_links"]
+    XPATH["donyaye_serial"]["dynamic_archive"]["mkv_links"],
+    PREFER["resolution"],
+    PREFER["dub/subtitle"],
 )
 chrome.close()
 

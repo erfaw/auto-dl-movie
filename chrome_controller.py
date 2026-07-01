@@ -78,7 +78,7 @@ class ChromeController:
 
         return r_movie
 
-    def get_dl_link(self, urls: dict, movies: list[dict], search_xpath: str, show_links_btn_text: str, mkv_links: str) -> dict:
+    def get_dl_link(self, urls: dict, movies: list[dict], search_xpath: str, show_links_btn_text: str, mkv_links: str, resolution: str, dub_or_sub: str) -> dict:
         """
         Get all download links from particular page in `Donyaye Serial` website archive.
 
@@ -125,9 +125,9 @@ class ChromeController:
                 all_links_locator = self.main_page.locator(mkv_links).all()
                 all_links = [link.get_attribute('href') for link in all_links_locator]
 
-                filtered_links = [ l for l in all_links if "720p" in l and "SoftSub" in l ] # type: ignore
+                filtered_links = [ l for l in all_links if resolution in l and dub_or_sub in l ] # type: ignore
                 if not filtered_links : 
-                    filtered_links = [ l for l in all_links if "720p" in l ] # type: ignore
+                    filtered_links = [ l for l in all_links if resolution in l ] # type: ignore
                 if not filtered_links : 
                     filtered_links = [all_links[0]]
 
