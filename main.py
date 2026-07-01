@@ -3,7 +3,6 @@ from chrome_controller import ChromeController
 from downloader import Downloader
 import subprocess as sp
 from consts import (
-    IMDB_WL_URL,
     CHROME_PATH,
     UL_XPATH,
     URLS,
@@ -14,7 +13,7 @@ from consts import (
 chrome = ChromeController(CHROME_PATH)
 downloader = Downloader()
 
-chrome.main_page.goto(url=IMDB_WL_URL)
+chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(UL_XPATH)
 movies_dl_links = chrome.get_dl_link(URLS, SEARCH_INPUT_XPATH, movies)
 chrome.close()
