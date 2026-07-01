@@ -12,6 +12,7 @@ If it's okay to run that command, feel free to set this to `None` to use default
 XPATH = {
     "imdb_wl": {
         "ul_container": r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul',
+        "year": "xpath=/div/div/div/div[1]/div[2]/div[2]/ul/li[1]",
     },
     "donyaye_serial": {
         "dynamic_archive": {

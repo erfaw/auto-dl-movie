@@ -41,7 +41,7 @@ class ChromeController:
         """
         self.pw.stop()
 
-    def get_movies_list(self, ul_selector):
+    def get_movies_list(self, ul_selector, year_xpath):
         """
         Scrape all movies and slice 5 first then return.
 
@@ -63,7 +63,7 @@ class ChromeController:
             d["name"] = name[3:]
 
             year = m.locator(
-                "xpath=/div/div/div/div[1]/div[2]/div[2]/ul/li[1]"
+                year_xpath
             ).inner_text()
             d["year"] = year
 
