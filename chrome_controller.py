@@ -47,6 +47,7 @@ class ChromeController:
 
         Args:
             ul_selector: XPath or css selector of some element in DOM.
+            year_xpath: XPath for selecting year in imdb_wl page.
 
         Returns:
             list[dict]: return a list of dicts contain movies detail.
@@ -78,14 +79,29 @@ class ChromeController:
 
         return r_movie
 
-    def get_dl_link(self, urls: dict, movies: list[dict], search_xpath: str, show_links_btn_text: str, mkv_links: str, resolution: str, dub_or_sub: str) -> dict:
+    def get_dl_link(
+        self,
+        urls: dict,
+        movies: list[dict],
+        search_xpath: str,
+        show_links_btn_text: str,
+        mkv_links: str,
+        resolution: str,
+        dub_or_sub: str,
+    ) -> dict:
         """
         Get all download links from particular page in `Donyaye Serial` website archive.
 
         Args:
             urls (dict[dict]): a dict contain link of website archive. where to check. for now it is shit and static!
-            search_xpath (str): raw string to locating search input with `XPATH`.
             movies (list[dict]): list of dict which must contains `name`, `year`, `directors` of movie.
+            search_xpath (str): raw string to locating search input with `XPATH`.
+            show_links_btn_text (str): raw string to use with `Page.get_by_text()` and get a particular button.
+            mkv_links (str): CSS selector which selects just `*.mkv` links from <a> tags.
+            resolution (str): About resolution for filtering downlaod links.
+            (mostly added to be able more dynamicly change this when it's not working anymore.)
+            dub_or_sub (str): About dubbed or subtitle for filtering downlaod links. 
+            (mostly added to be able more dynamicly change this when it's not working anymore.).
             None:
 
         Examples:
@@ -115,7 +131,7 @@ class ChromeController:
         for m in movies:
             search_input_locator.fill(f"{m["name"]} {m["year"]}")
             search_input_locator.press("Enter")
-            
+
             if show_links_btn_locator.count() == 0 :
                 # TODO : make procedure to remove this films from Watchlist and added them to another playlist called 'Not_found' or 'Irani'
                 links[m['name']] = None
