@@ -19,6 +19,7 @@ movies_dl_links = chrome.get_dl_link(
     movies,
     XPATH["donyaye_serial"]["dynamic_archive"]["search_input"],
     XPATH["donyaye_serial"]["dynamic_archive"]["show_links_btn_text"],
+    XPATH["donyaye_serial"]["dynamic_archive"]["mkv_links"]
 )
 chrome.close()
 
