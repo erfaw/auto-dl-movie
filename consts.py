@@ -21,7 +21,13 @@ URLS = {
     },
     "imdb_wl": r"https://www.imdb.com/user/p.rihuzvwcddwbnucg76npzg62m4/watchlist/",
 }
-
-XPATH["donyaye_serial"]["search_input"] = r""
+"""dict: and organized dictionary for each site we use till here. 
+this organization mostly is for be scalable for future!
+"""
 
 SAVE_DIR = Path().home() / "Desktop" / "auto-movie-downloader"
+"""Path: default is to your desktop in windows and in other OS idk :) .
+
+>>> Users/<Your User>/Dekstop/auto-movie-downloader
+
+"""
