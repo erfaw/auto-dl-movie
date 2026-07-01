@@ -109,17 +109,30 @@ class ChromeController:
         self.main_page.goto(urls["donyaye_serial"]["dynamic_archive"])
 
         search_input_locator = self.main_page.locator(search_xpath)
-        search_input_locator.fill(f"{movies[0]["name"]} {movies[0]["year"]}")
-        search_input_locator.press("Enter")
+        show_links_btn_locator = self.main_page.get_by_text("مشاهده لینک ها")
 
-        self.main_page.get_by_text("مشاهده لینک ها").click()
-        return dict(
-            actual_link=self.main_page.locator("a[href$='.mkv']").first.get_attribute(
-                "href"
-            )
-        )
+        links = {}
+        for m in movies:
+            search_input_locator.fill(f"{m["name"]} {m["year"]}")
+            search_input_locator.press("Enter")
+            
+            if show_links_btn_locator.count() == 0 :
+                # TODO : make procedure to remove this films from Watchlist and added them to another playlist called 'Not_found' or 'Irani'
+                links[m['name']] = 'not_found'
+            else:
+                show_links_btn_locator.first.click()
 
-        # TODO : get a movie dict and search in donyaye serial for download links. then return it.
+                all_links_locator = self.main_page.locator("a[href$='.mkv']").all()
+
+                all_links = [link.get_attribute('href') for link in all_links_locator]
+
+                # TODO : filter the all_links to get links with 720p and remove dubbed one. which needs a extra check before all and its how many links we have. if there is any but like dubbed, fuck it and download it. 
+                # filtered_list = [ link for link in all_links if link.contains("720")]
+
+                links[m['name']] = all_links
+
+        return links
+
 
     def dl_movie(self):
         pass 
