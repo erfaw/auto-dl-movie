@@ -1,6 +1,7 @@
 from pathlib import Path
 from chrome_controller import ChromeController
 from downloader import Downloader
+import subprocess as sp
 
 IMDB_WL_URL = r"https://www.imdb.com/user/p.rihuzvwcddwbnucg76npzg62m4/watchlist/"
 
@@ -31,9 +32,10 @@ movies_dl_links = chrome.get_dl_link(URLs, SEARCH_INPUT_XPATH, movies)
 SAVE_DIR = Path().home() / 'Desktop' / 'auto-movie-downloader'
 SAVE_DIR.mkdir(exist_ok=True)
 
-# for n, l in movies_dl_links.items():
-#     chrome.dl_movie(l[0], SAVE_DIR)
-#     input("Press anything to close.")
-
+sp.call('clear', shell=True)
+for n, l in movies_dl_links.items():
+    print(f'\nDonwloading "{n}" ...')
+    downloader.get(l[0], SAVE_DIR)
+    print(f"{n} downloaded successfully!")
 
 input("Press anything to close.")
