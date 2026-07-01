@@ -13,6 +13,9 @@ XPATH = {
         },
     },
 }
+"""dict[dict[xpath]]: an organized dictionary for each site we use till here. 
+this organization mostly is for be scalable for future!
+"""
 
 URLS = {
     "donyaye_serial": {
@@ -21,7 +24,7 @@ URLS = {
     },
     "imdb_wl": r"https://www.imdb.com/user/p.rihuzvwcddwbnucg76npzg62m4/watchlist/",
 }
-"""dict: and organized dictionary for each site we use till here. 
+"""dict[url]: an organized dictionary for each site we use till here. 
 this organization mostly is for be scalable for future!
 """
 
