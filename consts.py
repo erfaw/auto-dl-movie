@@ -3,9 +3,11 @@ from pathlib import Path
 # BASE_DIR = Path(__name__).as_posix()
 CHROME_PATH = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
 
-UL_XPATH = (
-    r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul'
-)
+XPATH = {
+    "imdb_wl": {
+        "ul_container": r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul',
+    }
+}
 
 URLS = {
     "donyaye_serial": {

@@ -4,17 +4,17 @@ from downloader import Downloader
 import subprocess as sp
 from consts import (
     CHROME_PATH,
-    UL_XPATH,
     URLS,
     SEARCH_INPUT_XPATH,
     SAVE_DIR,
+    XPATH
 )
 
 chrome = ChromeController(CHROME_PATH)
 downloader = Downloader()
 
 chrome.main_page.goto(url=URLS["imdb_wl"])
-movies = chrome.get_movies_list(UL_XPATH)
+movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"])
 movies_dl_links = chrome.get_dl_link(URLS, SEARCH_INPUT_XPATH, movies)
 chrome.close()
 
