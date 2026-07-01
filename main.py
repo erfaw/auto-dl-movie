@@ -30,8 +30,11 @@ SAVE_DIR.mkdir(exist_ok=True)
 
 sp.call("clear", shell=True)
 for n, l in movies_dl_links.items():
-    print(f'\nDonwloading "{n}" ...')
-    downloader.get(l[0], SAVE_DIR)
-    print(f"{n} downloaded successfully!")
+    if l is None:
+        print(f'\n❌ Not found any link for "{n}"')
+    else:
+        print(f'\nDonwloading "{n}" ...')
+        downloader.get(l[0], SAVE_DIR)
+        print(f"✅ {n} downloaded successfully!")
 
 input("Press anything to close.")

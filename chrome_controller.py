@@ -118,7 +118,7 @@ class ChromeController:
             
             if show_links_btn_locator.count() == 0 :
                 # TODO : make procedure to remove this films from Watchlist and added them to another playlist called 'Not_found' or 'Irani'
-                links[m['name']] = 'not_found'
+                links[m['name']] = None
             else:
                 show_links_btn_locator.first.click()
 
