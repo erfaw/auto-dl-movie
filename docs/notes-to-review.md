@@ -66,3 +66,42 @@ helpful methods in first look:
 * Equivalent to assigning `chunk` before the loop and after each iteration.
 * Commonly used for reading files, sockets, and streams until EOF.
 * Docs: https://docs.python.org/3/reference/expressions.html#assignment-expressions | https://peps.python.org/pep-0572/
+
+---
+
+## Streaming in file level with open() and read()
+Because **the file object (`source`) keeps an internal file pointer (cursor).**
+
+Every time you call:
+
+```python
+source.read(CHUNK_SIZE)
+```
+
+Python:
+
+1. Reads `CHUNK_SIZE` bytes **from the current cursor position**.
+2. Automatically moves the cursor forward by the number of bytes read.
+
+For example, with `CHUNK_SIZE = 4` and file contents:
+
+```text
+ABCDEFGH
+```
+
+The calls behave like this:
+
+```text
+1st read() -> ABCD   (cursor moves to E)
+2nd read() -> EFGH   (cursor moves to EOF)
+3rd read() -> b''    (EOF reached)
+```
+
+You never have to tell `read()` where to continue—it remembers because the **file object maintains the current position**.
+
+If you're curious, you can inspect it with:
+
+* `source.tell()` → current cursor position.
+* `source.seek(offset)` → move the cursor manually.
+
+This "cursor" concept is fundamental to file I/O in Python and most programming languages.
