@@ -61,8 +61,12 @@ class FileHandler:
         .. _shutil.copy2():
             https://docs.python.org/3/library/shutil.html#shutil.copy2
         """
-        # TODO : Check for existance of src.
-        # TODO : Check for existance of dest.
+        if not src.exists():
+            print(f"This source does not exist. Entered Path: '{src}'")
+        if not src.is_file() or not dest.is_file():
+            print(f"Use path to the files please.")
+        if not dest.parent.exists():
+            dest.parent.mkdir(parents=True)
 
 
     def move(self):
