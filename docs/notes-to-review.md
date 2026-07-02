@@ -53,6 +53,6 @@ its most powerfull way to work with files and directories.
 
 helpful methods in first look: 
 1. [shutil.move()](https://docs.python.org/3/library/shutil.html#shutil.move)
-2. [shutil.copy()](https://docs.python.org/3/library/shutil.html#shutil.copy)
+2. [shutil.copy2()](https://docs.python.org/3/library/shutil.html#shutil.copy2)
 3. [shutil.copytree()](https://docs.python.org/3/library/shutil.html#shutil.copytree)
 4. [shutil.disk_usage()](https://docs.python.org/3/library/shutil.html#shutil.disk_usage)
