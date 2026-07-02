@@ -1,5 +1,5 @@
-# TODO : make a FileHandler class to work with files. it must be able to use `shutil` to copy files from a `src` to a `dest` with progressbar using `tqdm`. which for now be called after download procedure. 
-# TODO : after implementing above todo, with `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread. 
+# TODO : make a FileHandler class to work with files. it must be able to use `shutil` to copy files from a `src` to a `dest` with progressbar using `tqdm`. which for now be called after download procedure.
+# TODO : after implementing above todo, with `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread.
 import shutil
 from pathlib import Path
 
@@ -14,9 +14,37 @@ class FileHandler:
         """
         self.base_dir = base_dir
 
-    def disk_info(self):
-        pass 
-    
+    def disk_info(self, path: Path) -> dict[str, float] | None:
+        """
+        Get information about disk of given Path obj and return.
+        Args:
+            path (Path): Path object which must be `exists()=True` on this system.
+        Returns:
+            dict[str, float] | None:
+                if exists: used, free and total amount in `GB` (1024**3).
+                if not exists: None.
+        Example:
+            P:/ does not exist:
+            >>> disk_info(Path('P:/'))
+            None
+            
+            C:/ exist:
+            >>> disk_info(Path('C:/')) # exist
+            {'unit': 'GB', 'total': 326.31, 'used': 248.96, 'free': 77.35}
+        """
+
+        if not path.exists():
+            print(f"This Path({path}) does not exist on this system.")
+            return None
+
+        disk = {}
+        du = shutil.disk_usage(path=path)
+        disk["unit"] = 'GB'
+        disk["total"] = float(round(du.total/(1024**3), 2))
+        disk["used"] = float(round(du.used/(1024**3), 2))
+        disk["free"] = float(round(du.free/(1024**3), 2))
+        return disk
+
     def copy(self):
         pass
 
