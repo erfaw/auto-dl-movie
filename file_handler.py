@@ -45,8 +45,25 @@ class FileHandler:
         disk["free"] = float(round(du.free/(1024**3), 2))
         return disk
 
-    def copy(self):
-        pass
+    def copy(self, src: Path, dest: Path) -> None:
+        """
+        Use `shutil.copy2()`_ to copy a file from src to dest.
+
+        Args:
+            src(Path):
+                Path object for source file.
+            dest(Path):
+                Path object for destination file. (it must point to file not directory)
+
+        Returns:
+            None
+
+        .. _shutil.copy2():
+            https://docs.python.org/3/library/shutil.html#shutil.copy2
+        """
+        # TODO : Check for existance of src.
+        # TODO : Check for existance of dest.
+
 
     def move(self):
         pass
