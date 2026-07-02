@@ -67,7 +67,11 @@ class FileHandler:
         if not src.is_file():
             print(f"Use path to the files please.")
             return None
-        if not dest_dir.exists():
+        
+        if not dest_dir.is_dir():
+            print("Entered Path for 'dest_dir' is not a directory. Use path to a directory please.")
+            return None
+        if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
             dest_dir.parent.mkdir(parents=True)
         # TODO : make 'dest' to be a directory in logic. then prepare dest_name which is a Path obj. then tend to copy.
         # TODO : check for filenames be exual (if not, file be corrupted for good. )
