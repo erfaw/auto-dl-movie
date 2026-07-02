@@ -74,7 +74,7 @@ class FileHandler:
             print("Entered Path for 'dest_dir' is not a directory. Use path to a directory please.")
             return None
         if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
-            dest_dir.parent.mkdir(parents=True)
+            dest_dir.parent.mkdir(parents=True, exist_ok=True)
 
         dest_fp = dest_dir / src_fp.name
 
@@ -85,6 +85,8 @@ class FileHandler:
 
         if dest_fp.name == src_fp.name:
             # TODO : with tqdm make a progress bar.
+            dest_fp.parent.mkdir(exist_ok=True)
+
             print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
             self._copy_progress_bar(src_fp, dest_fp, )
             print("✅done")
