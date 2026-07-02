@@ -42,9 +42,17 @@ class Downloader:
         path.mkdir(exist_ok=True)
         file_path = path / file_name
 
-        # TODO : check for 1.existance of file and 2.complete downloaded , then start 
+        if file_path.is_file() and file_path.exists():
+            # TODO (low): ask user for this situation, rewrite or skip?
+            is_complete = "❌"
+            with rq.head(url) as r:
+                file_size_byte = int(r.headers['Content-Length'])
+                if file_size_byte == file_path.stat().st_size:
+                    is_complete = "✅"
+            print(f"\t🎭🌓'{file_path.name}' file already exists in dest_dir!\n\t(download is_complete: {is_complete})")
+            return None
         # TODO : Implement resume feature for downlading. (if there is a file with that name already)
-        # TODO : Implement Errro handling for ConnectoinError or Abort.
+        # TODO : Implement Error handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
             with open(file_path, 'wb') as file:
