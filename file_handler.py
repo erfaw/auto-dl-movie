@@ -48,7 +48,8 @@ class FileHandler:
 
     def copy(self, src_fp: Path, dest_dir: Path) -> None:
         """
-        Use `shutil.copy2()`_ to copy a file from src to dest_dir.
+        Use `open()` and read/write with chunks to copy a file from src to dest_dir.
+        It validates `src_fp` and `dest_dir` then calls `_copy_with_progress_bar()`.
 
         Args:
             src_fp(Path):
@@ -58,9 +59,6 @@ class FileHandler:
 
         Returns:
             None
-
-        .. _shutil.copy2():
-            https://docs.python.org/3/library/shutil.html#shutil.copy2
         """
         if not src_fp.exists():
             print(f"This source does not exist. Entered Path: '{src_fp}'")
