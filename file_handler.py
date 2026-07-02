@@ -48,7 +48,6 @@ class FileHandler:
 
     def copy(self, src_fp: Path, dest_dir: Path) -> None:
         """
-        Use `open()` and read/write with chunks to copy a file from src to dest_dir.
         It validates `src_fp` and `dest_dir` then calls `_copy_with_progress_bar()`.
 
         Args:
@@ -81,7 +80,6 @@ class FileHandler:
             return None
 
         if dest_fp.name == src_fp.name:
-            # TODO : with tqdm make a progress bar.
             dest_fp.parent.mkdir(exist_ok=True)
 
             print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
@@ -90,7 +88,19 @@ class FileHandler:
         else:
             raise RuntimeError
 
-    def _copy_with_progress_bar(self, src_fp, dest_fp):
+    def _copy_with_progress_bar(self, src_fp: Path, dest_fp: Path) -> None:
+        """
+        Use `open()` and read/write with chunks to copy a file from src to dest_dir.
+
+        Args:
+            src_fp (Path):
+                Path object for source file.
+            dest_fp(Path):
+                Path object for destination directory. (it has to be directory!)
+        
+        Returns:
+            None:
+        """
         total_size = src_fp.stat().st_size
 
         with (
