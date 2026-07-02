@@ -69,7 +69,14 @@ class FileHandler:
             return None
         if not dest.parent.exists():
             dest.parent.mkdir(parents=True)
-
+        # TODO : make 'dest' to be a directory in logic. then prepare dest_name which is a Path obj. then tend to copy.
+        # TODO : check for filenames be exual (if not, file be corrupted for good. )
+        # TODO : start copy processing.
+        print(shutil.copy2(
+            src=src,
+            dst=dest,
+        ))
+        print("✅done")
 
     def move(self):
         pass
