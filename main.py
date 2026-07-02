@@ -8,7 +8,8 @@ from consts import (
     URLS,
     SAVE_DIR,
     XPATH,
-    PREFER
+    PREFER,
+    BASE_DIR,
 )
 
 chrome = ChromeController(CHROME_PATH)

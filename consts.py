@@ -1,6 +1,6 @@
 from pathlib import Path
 
-# BASE_DIR = Path(__name__).as_posix()
+BASE_DIR = Path(__file__).resolve().parent
 CHROME_PATH = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
 """Path: point to `chrome.exe` file on your computer. 
 
