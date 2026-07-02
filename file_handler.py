@@ -45,7 +45,7 @@ class FileHandler:
         disk["free"] = float(round(du.free/(1024**3), 2))
         return disk
 
-    def copy(self, src: Path, dest_dir: Path) -> None:
+    def copy(self, src: Path, dest_dir: Path) -> None: # change src to src_fp
         """
         Use `shutil.copy2()`_ to copy a file from src to dest_dir.
 
@@ -73,14 +73,19 @@ class FileHandler:
             return None
         if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
             dest_dir.parent.mkdir(parents=True)
-        # TODO : make 'dest' to be a directory in logic. then prepare dest_name which is a Path obj. then tend to copy.
-        # TODO : check for filenames be exual (if not, file be corrupted for good. )
-        # TODO : start copy processing.
-        print(shutil.copy2(
-            src=src,
-            dst=dest_dir,
-        ))
-        print("✅done")
+
+        dest_fp = dest_dir / src.name
+        # TODO : Check for existance of dest_fp and is_file(). if true print details for user and return None.
+        if dest_fp.name == src.name:
+            # TODO : with tqdm make a progress bar.
+            print(f"---\nstart copying...\n\tsrc: '{src}'\n\tdest_fp: '{dest_dir}'")
+            print(shutil.copy2(
+                src=src,
+                dst=dest_fp,
+            ))
+            print("✅done")
+        else:
+            raise RuntimeError
 
     def move(self):
         pass
