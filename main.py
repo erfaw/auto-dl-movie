@@ -34,7 +34,7 @@ chrome.close()
 SAVE_DIR.mkdir(exist_ok=True)
 
 sp.call("clear", shell=True)
-for n, l in movies_dl_links.items():
+for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all links in Downloader.
     if l is None:
         print(f'\n❌ Not found any link for "{n}"')
     else:
