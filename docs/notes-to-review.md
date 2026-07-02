@@ -56,3 +56,13 @@ helpful methods in first look:
 2. [shutil.copy2()](https://docs.python.org/3/library/shutil.html#shutil.copy2)
 3. [shutil.copytree()](https://docs.python.org/3/library/shutil.html#shutil.copytree)
 4. [shutil.disk_usage()](https://docs.python.org/3/library/shutil.html#shutil.disk_usage)
+
+---
+
+## Walrus Operator (`:=`)
+
+* Introduced in **Python 3.8** to **assign and evaluate** in one expression.
+* Example: `while chunk := source.read(CHUNK_SIZE):`
+* Equivalent to assigning `chunk` before the loop and after each iteration.
+* Commonly used for reading files, sockets, and streams until EOF.
+* Docs: https://docs.python.org/3/reference/expressions.html#assignment-expressions | https://peps.python.org/pep-0572/
