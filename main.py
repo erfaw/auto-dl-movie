@@ -14,7 +14,9 @@ from consts import (
 
 chrome = ChromeController(CHROME_PATH)
 downloader = Downloader()
-file_handler = FileHandler()
+file_handler = FileHandler(
+    base_dir=BASE_DIR, 
+)
 
 chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])

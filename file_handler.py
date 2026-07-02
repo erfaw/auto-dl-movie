@@ -1,14 +1,18 @@
 # TODO : make a FileHandler class to work with files. it must be able to use `shutil` to copy files from a `src` to a `dest` with progressbar using `tqdm`. which for now be called after download procedure. 
 # TODO : after implementing above todo, with `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread. 
 import shutil
+from pathlib import Path
 
 
 class FileHandler:
-    def __init__(self) -> None:
+    def __init__(self, base_dir: Path) -> None:
         """
         Make an object to work with copying/moving/deleteing/making files on system. using `shutil`.
+
+        Args:
+            base_dir (Path): Path object for current running directory of program. 
         """
-        pass
+        self.base_dir = base_dir
 
     def disk_info(self):
         pass 
@@ -30,4 +34,3 @@ class FileHandler:
 
     def remove_dir(self):
         pass 
-    
