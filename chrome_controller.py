@@ -99,9 +99,9 @@ class ChromeController:
             show_links_btn_text (str): raw string to use with `Page.get_by_text()` and get a particular button.
             mkv_links (str): CSS selector which selects just `*.mkv` links from <a> tags.
             resolution (str): About resolution for filtering downlaod links.
-            (mostly added to be able more dynamicly change this when it's not working anymore.)
-            dub_or_sub (str): About dubbed or subtitle for filtering downlaod links. 
-            (mostly added to be able more dynamicly change this when it's not working anymore.).
+                (mostly added to be able more dynamicly change this when it's not working anymore.)
+            dub_or_sub (str): About dubbed or subtitle for filtering downlaod links.
+                (mostly added to be able more dynamicly change this when it's not working anymore.).
             None:
 
         Examples:
