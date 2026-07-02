@@ -45,12 +45,12 @@ class FileHandler:
         disk["free"] = float(round(du.free/(1024**3), 2))
         return disk
 
-    def copy(self, src: Path, dest_dir: Path) -> None: # change src to src_fp
+    def copy(self, src_fp: Path, dest_dir: Path) -> None:
         """
         Use `shutil.copy2()`_ to copy a file from src to dest_dir.
 
         Args:
-            src(Path):
+            src_fp(Path):
                 Path object for source file.
             dest_dir(Path):
                 Path object for destination directory. (it has to be directory!)
@@ -61,10 +61,10 @@ class FileHandler:
         .. _shutil.copy2():
             https://docs.python.org/3/library/shutil.html#shutil.copy2
         """
-        if not src.exists():
-            print(f"This source does not exist. Entered Path: '{src}'")
+        if not src_fp.exists():
+            print(f"This source does not exist. Entered Path: '{src_fp}'")
             return None
-        if not src.is_file():
+        if not src_fp.is_file():
             print(f"Use path to the files please.")
             return None
         
@@ -74,18 +74,18 @@ class FileHandler:
         if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
             dest_dir.parent.mkdir(parents=True)
 
-        dest_fp = dest_dir / src.name
+        dest_fp = dest_dir / src_fp.name
 
         if dest_fp.is_file() and dest_fp.exists():
             # TODO (low): ask user for this situation, rewrite or skip?
             print(f"🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
             return None
 
-        if dest_fp.name == src.name:
+        if dest_fp.name == src_fp.name:
             # TODO : with tqdm make a progress bar.
-            print(f"---\nstart copying...\n\tsrc: '{src}'\n\tdest_fp: '{dest_dir}'")
+            print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
             print(shutil.copy2(
-                src=src,
+                src=src_fp,
                 dst=dest_fp,
             ))
             print("✅done")
