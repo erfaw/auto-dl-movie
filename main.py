@@ -35,6 +35,7 @@ for n, l in movies_dl_links.items():
     else:
         print(f'\nDonwloading "{n}" ...')
         downloader.get(l[0], SAVE_DIR)
+        # TODO : Open a Thread for copying the file to `dest`.
         print(f"✅ {n} downloaded successfully!")
 
 input("Press anything to close.")
