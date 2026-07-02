@@ -75,7 +75,12 @@ class FileHandler:
             dest_dir.parent.mkdir(parents=True)
 
         dest_fp = dest_dir / src.name
-        # TODO : Check for existance of dest_fp and is_file(). if true print details for user and return None.
+
+        if dest_fp.is_file() and dest_fp.exists():
+            # TODO (low): ask user for this situation, rewrite or skip?
+            print(f"🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
+            return None
+
         if dest_fp.name == src.name:
             # TODO : with tqdm make a progress bar.
             print(f"---\nstart copying...\n\tsrc: '{src}'\n\tdest_fp: '{dest_dir}'")
