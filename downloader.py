@@ -5,19 +5,12 @@ from urllib.parse import unquote
 from tqdm import tqdm
 
 class Downloader:
-    """
-    Make a Downloader object to controll download by stream using `requests`_ package.
-
-    .. _requests:
-        https://github.com
-    """
-
     def __init__(self) -> None:
         """
-        Downloader using `requests`_
+        Make a Downloader object to controll download by stream using `requests`_ package.
 
         .. _requests:
-            https://github.com
+            https://requests.readthedocs.io/en/latest/#
         """
 
 
