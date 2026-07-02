@@ -69,7 +69,7 @@ class FileHandler:
         if dest_dir.is_file():
             print("Entered Path for 'dest_dir' is not a directory. Use path to a directory please.")
             return None
-        if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
+        if not dest_dir.exists(): # TODO (low) : could be refactored to one line and delete if.
             dest_dir.parent.mkdir(parents=True, exist_ok=True)
 
         dest_fp = dest_dir / src_fp.name
