@@ -2,6 +2,7 @@
 # TODO : after implementing above todo, with `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread.
 import shutil
 from pathlib import Path
+from tqdm import tqdm
 
 
 class FileHandler:
@@ -13,6 +14,7 @@ class FileHandler:
             base_dir (Path): Path object for current running directory of program. 
         """
         self.base_dir = base_dir
+        self.CHUNK_SIZE = 64 * 1024
 
     def disk_info(self, path: Path) -> dict[str, float] | None:
         """
@@ -68,7 +70,7 @@ class FileHandler:
             print(f"Use path to the files please.")
             return None
         
-        if not dest_dir.is_dir():
+        if dest_dir.is_file():
             print("Entered Path for 'dest_dir' is not a directory. Use path to a directory please.")
             return None
         if not dest_dir.exists(): # TODO : could be refactored to one line and delete if.
@@ -84,13 +86,31 @@ class FileHandler:
         if dest_fp.name == src_fp.name:
             # TODO : with tqdm make a progress bar.
             print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
-            print(shutil.copy2(
-                src=src_fp,
-                dst=dest_fp,
-            ))
+            self._copy_progress_bar(src_fp, dest_fp, )
             print("✅done")
         else:
             raise RuntimeError
+
+    def _copy_progress_bar(self, src_fp, dest_fp):
+        total_size = src_fp.stat().st_size
+
+        with (
+            src_fp.open("rb") as source,
+            dest_fp.open("wb") as target,
+            tqdm(
+                total=total_size,
+                unit="B",
+                unit_scale=True,
+                unit_divisor=1024,
+                desc=src_fp.name,
+                colour="green",
+            ) as pbar,
+        ):
+            while chunk := source.read(self.CHUNK_SIZE):
+                target.write(chunk)
+                pbar.update(len(chunk))
+
+        shutil.copystat(src_fp, dest_fp)
 
     def move(self):
         pass
