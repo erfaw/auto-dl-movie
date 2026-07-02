@@ -43,4 +43,6 @@ for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all 
         # TODO : Open a Thread for copying the file to `dest`.
         print(f"✅ {n} downloaded successfully!")
 
+# TODO : Start procedure of file copying.
+
 input("Press anything to close.")
