@@ -45,15 +45,15 @@ class FileHandler:
         disk["free"] = float(round(du.free/(1024**3), 2))
         return disk
 
-    def copy(self, src: Path, dest: Path) -> None:
+    def copy(self, src: Path, dest_dir: Path) -> None:
         """
-        Use `shutil.copy2()`_ to copy a file from src to dest.
+        Use `shutil.copy2()`_ to copy a file from src to dest_dir.
 
         Args:
             src(Path):
                 Path object for source file.
-            dest(Path):
-                Path object for destination file. (it must point to file not directory)
+            dest_dir(Path):
+                Path object for destination directory. (it has to be directory!)
 
         Returns:
             None
@@ -67,14 +67,14 @@ class FileHandler:
         if not src.is_file():
             print(f"Use path to the files please.")
             return None
-        if not dest.parent.exists():
-            dest.parent.mkdir(parents=True)
+        if not dest_dir.parent.exists():
+            dest_dir.parent.mkdir(parents=True)
         # TODO : make 'dest' to be a directory in logic. then prepare dest_name which is a Path obj. then tend to copy.
         # TODO : check for filenames be exual (if not, file be corrupted for good. )
         # TODO : start copy processing.
         print(shutil.copy2(
             src=src,
-            dst=dest,
+            dst=dest_dir,
         ))
         print("✅done")
 
