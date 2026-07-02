@@ -50,6 +50,8 @@ class Downloader:
         file_path = path / file_name
 
         # TODO : check for 1.existance of file and 2.complete downloaded , then start 
+        # TODO : Implement resume feature for downlading. (if there is a file with that name already)
+        # TODO : Implement Errro handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
             with open(file_path, 'wb') as file:
