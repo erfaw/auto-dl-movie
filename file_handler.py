@@ -88,12 +88,12 @@ class FileHandler:
             dest_fp.parent.mkdir(exist_ok=True)
 
             print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
-            self._copy_progress_bar(src_fp, dest_fp, )
+            self._copy_with_progress_bar(src_fp, dest_fp, )
             print("✅done")
         else:
             raise RuntimeError
 
-    def _copy_progress_bar(self, src_fp, dest_fp):
+    def _copy_with_progress_bar(self, src_fp, dest_fp):
         total_size = src_fp.stat().st_size
 
         with (
