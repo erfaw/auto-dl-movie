@@ -64,7 +64,7 @@ class FileHandler:
         if not src.exists():
             print(f"This source does not exist. Entered Path: '{src}'")
             return None
-        if not src.is_file() or not dest.is_file():
+        if not src.is_file():
             print(f"Use path to the files please.")
             return None
         if not dest.parent.exists():
