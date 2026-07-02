@@ -1,6 +1,7 @@
 from pathlib import Path
 from chrome_controller import ChromeController
 from downloader import Downloader
+from file_handler import FileHandler
 import subprocess as sp
 from consts import (
     CHROME_PATH,
@@ -12,6 +13,7 @@ from consts import (
 
 chrome = ChromeController(CHROME_PATH)
 downloader = Downloader()
+file_handler = FileHandler()
 
 chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])
