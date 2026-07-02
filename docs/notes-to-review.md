@@ -105,3 +105,43 @@ If you're curious, you can inspect it with:
 * `source.seek(offset)` → move the cursor manually.
 
 This "cursor" concept is fundamental to file I/O in Python and most programming languages.
+
+---
+
+## How to implement resume downloading file with requests.get(stream=True)? HTTP Resume (Range Requests)
+
+* Resume downloads use the HTTP `Range` header (e.g. `Range: bytes=<downloaded>-`) to request only the remaining bytes.
+* If the server supports it, it responds with **206 Partial Content** and continues the download.
+* If it ignores the `Range` header, it responds with **200 OK**, so the download should restart.
+* The local file must be opened in **append (`ab`)** mode when resuming.
+* Servers often indicate support with `Accept-Ranges: bytes`.
+
+Most important part of this implementation is about Range request.
+
+```
+# More codes above...
+    downloaded = file_path.stat().st_size if file_path.exists() else 0
+
+    headers = {}
+    if downloaded:
+        headers["Range"] = f"bytes={downloaded}-"
+
+    with requests.get(url, headers=headers, stream=True) as response:
+        response.raise_for_status()
+
+        # Server accepted resume
+        if response.status_code == 206:
+            mode = "ab"
+            total = int(response.headers["Content-Length"]) + downloaded
+
+        # Server ignored Range request
+        else:
+            mode = "wb"
+            downloaded = 0
+            total = int(response.headers.get("Content-Length", 0))
+# More codes below...
+```
+
+---
+
+##
