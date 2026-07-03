@@ -47,7 +47,7 @@ class Downloader:
             is_complete = "❌"
             with rq.head(url) as r:
                 file_size_byte = int(r.headers['Content-Length'])
-                if file_size_byte == file_path.stat().st_size:
+                if file_size_byte <= file_path.stat().st_size:
                     is_complete = "✅"
             print(f"\t🎭🌓'{file_path.name}' file already exists in dest_dir!\n\t(download is_complete: {is_complete})")
             return None
