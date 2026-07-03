@@ -2,8 +2,8 @@ from pathlib import Path
 from psutil import disk_partitions
 
 
-EXTERNAL_STORAGE = [i.mountpoint for i in disk_partitions() if 'removable' in i.opts][0]
-"""str: Get the mounted drive for external storage which is connected in running of program. use `psutil.disk_partitions()`_ and its `mountpoint` attribute.
+EXTERNAL_STORAGE = Path([i.mountpoint for i in disk_partitions() if 'removable' in i.opts][0])
+"""Path: Get the mounted drive for external storage which is connected in running of program. use `psutil.disk_partitions()`_ and its `mountpoint` attribute. then make a Path object from it.
 .. _psutil.disk_partitions():
     https://psutil.readthedocs.io/stable/index.html#psutil.disk_partitions
 """
