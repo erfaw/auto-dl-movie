@@ -1,4 +1,12 @@
 from pathlib import Path
+from psutil import disk_partitions
+
+
+EXTERNAL_STORAGE = [i.mountpoint for i in disk_partitions() if 'removable' in i.opts][0]
+"""str: Get the mounted drive for external storage which is connected in running of program. use `psutil.disk_partitions()`_ and its `mountpoint` attribute.
+.. _psutil.disk_partitions():
+    https://psutil.readthedocs.io/stable/index.html#psutil.disk_partitions
+"""
 
 BASE_DIR = Path(__file__).resolve().parent
 """Path: current working directory of program on your system. 

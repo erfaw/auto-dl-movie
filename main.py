@@ -10,6 +10,7 @@ from consts import (
     XPATH,
     PREFER,
     BASE_DIR,
+    EXTERNAL_STORAGE,
 )
 
 chrome = ChromeController(CHROME_PATH)
