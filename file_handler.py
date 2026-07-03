@@ -22,7 +22,7 @@ class FileHandler:
             path (Path): Path object which must be `exists()=True` on this system.
         Returns:
             dict[str, float] | None:
-                if exists: used, free and total amount in `GB` (1024**3).
+                if exists: used, free and total amount in `MB` (1024**2).
                 if not exists: None.
         Example:
             P:/ does not exist:
@@ -40,10 +40,10 @@ class FileHandler:
 
         disk = {}
         du = shutil.disk_usage(path=path)
-        disk["unit"] = 'GB'  # TODO : Change unit to MB (decrease 3 to 2 for **)
-        disk["total"] = float(round(du.total/(1024**3), 2))
-        disk["used"] = float(round(du.used/(1024**3), 2))
-        disk["free"] = float(round(du.free/(1024**3), 2))
+        disk["unit"] = 'MB'
+        disk["total"] = float(round(du.total/(1024**2), 2))
+        disk["used"] = float(round(du.used/(1024**2), 2))
+        disk["free"] = float(round(du.free/(1024**2), 2))
         return disk
 
     def copy(self, src_fp: Path, dest_dir: Path) -> None:
