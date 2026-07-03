@@ -14,7 +14,7 @@ class Downloader:
         """
 
 
-    def get(self, url: str, path: Path) -> None:
+    def get(self, url: str, path: Path) -> Path | None:
         """
         Starting download a file of any type to given path using `stream=True`_ and `Streaming Requests`_ .
 
@@ -28,7 +28,8 @@ class Downloader:
             path(Path):
                 SAVE_DIR which file will be save at. must be made with `pathlib.Path()`_
         Returns:
-            None:
+            Path | None: Path to the downloaded file if successful; otherwise, None.
+
         .. _stream=True:
             https://requests.readthedocs.io/en/latest/api/#requests.Response.iter_content
         .. _Streaming Requests:
@@ -65,4 +66,5 @@ class Downloader:
                         if chunk :
                             file.write(chunk)
                             pb.update(len(chunk))
+        return file_path
 
