@@ -40,7 +40,7 @@ class FileHandler:
 
         disk = {}
         du = shutil.disk_usage(path=path)
-        disk["unit"] = 'GB'
+        disk["unit"] = 'GB'  # TODO : Change unit to MB (decrease 3 to 2 for **)
         disk["total"] = float(round(du.total/(1024**3), 2))
         disk["used"] = float(round(du.used/(1024**3), 2))
         disk["free"] = float(round(du.free/(1024**3), 2))

@@ -45,5 +45,11 @@ for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all 
         print(f"✅ {n} downloaded successfully!")
 
 # TODO : Start procedure of file copying.
+# free_space = file_handler.disk_info(EXTERNAL_STORAGE)['free'] * 1024 # type:ignore
+
+# dl_dir_whole_space = SAVE_DIR.stat().st_size
+
+# if free_space > dl_dir_whole_space:
+#     print('we can do it on a row')
 
 input("Press anything to close.")
