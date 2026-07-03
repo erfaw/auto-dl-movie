@@ -31,7 +31,7 @@ class FileHandler:
             
             C:/ exist:
             >>> disk_info(Path('C:/')) # exist
-            {'unit': 'GB', 'total': 326.31, 'used': 248.96, 'free': 77.35}
+            {'unit': 'MB', 'total': 334141.44, 'used': 254935.04, 'free': 79206.40}
         """
 
         if not path.exists():
