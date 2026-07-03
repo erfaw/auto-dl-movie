@@ -22,6 +22,9 @@ class Downloader:
 
         With power of `tqdm`_ package shows a nice progress bar in terminal.
 
+        Note:
+            returns the Path object even file exists from past and is complete.
+
         Args:
             url(str):
                 full URL string which start download with `GET` request.
@@ -45,13 +48,16 @@ class Downloader:
 
         if file_path.is_file() and file_path.exists():
             # TODO (low): ask user for this situation, rewrite or skip?
-            is_complete = "❌"
+            is_complete = False
             with rq.head(url) as r:
                 file_size_byte = int(r.headers['Content-Length'])
                 if file_size_byte <= file_path.stat().st_size:
-                    is_complete = "✅"
+                    is_complete = True
             print(f"\t🎭🌓'{file_path.name}' file already exists in dest_dir!\n\t(download is_complete: {is_complete})")
-            return None
+            if is_complete:
+                return file_path
+            else:
+                return None
         # TODO : Implement resume feature for downlading. (if there is a file with that name already)
         # TODO : Implement Error handling for ConnectoinError or Abort.
 

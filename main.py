@@ -40,11 +40,11 @@ for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all 
         print(f'\n❌ Not found any link for "{n}"')
     else:
         print(f'\nDonwloading "{n}" ...')
-        downloader.get(l[0], SAVE_DIR)
+        fp = downloader.get(l[0], SAVE_DIR)
+        if fp:
+            file_handler.downloaded_movies_fp.append(fp)
         # TODO : Open a Thread for copying the file to `dest`.
         print(f"✅ {n} downloaded successfully!")
-
-# TODO : Get a list of downloaded files with Path.rglob() and store it
 
 # TODO : Start procedure of file copying.
 # free_space = file_handler.disk_info(EXTERNAL_STORAGE)['free'] * 1024 # type:ignore
