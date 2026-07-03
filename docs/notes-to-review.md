@@ -144,4 +144,47 @@ Most important part of this implementation is about Range request.
 
 ---
 
+
+## How to detect external device and build on it?
+
+Concieving candidates:
+
+### `psutil.disk_partitions()`
+Output example:
+```
+[
+    sdiskpart(
+        device='C:\\', 
+        mountpoint='C:\\', 
+        fstype='NTFS', 
+        opts='rw,fixed', 
+        maxfile=255, 
+        maxpath=260
+    ),
+    sdiskpart(device='J:\\', mountpoint='J:\\', fstype='FAT32', opts='rw,removable', maxfile=255, maxpath=260),
+ ]
+```
+
+### `pywin32 (Windows Management Instrumentation - WMI)` && `wmi package && psutil (limited)`
+You can retrieve things like:
+Device name
+Manufacturer
+Serial number (if exposed)
+PNP Device ID
+USB VID/PID
+
+### `adb`
+Android phones
+If USB debugging is enabled:
+This is by far the best option because you can get:
+Model
+Storage
+Battery
+Android version
+Copy files
+Install apps
+Execute shell commands
+
+---
+
 ##
