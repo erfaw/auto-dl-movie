@@ -14,8 +14,8 @@ class FileHandler:
         """
         self.base_dir = base_dir
         self.CHUNK_SIZE = 64 * 1024
-        self.   : list = []
-
+        self.downloaded_movies_fp: list = []
+        
     def disk_info(self, path: Path) -> dict[str, float] | None:
         """
         Get information about disk of given Path obj and return.
