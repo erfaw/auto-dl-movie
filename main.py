@@ -13,12 +13,17 @@ from consts import (
     EXTERNAL_STORAGE,
 )
 
+
+# TODO (Mid) : Design and implement Database with sqlite and SQLAlchemy to somehow program remebers what it did before and make it possible to implement some more specific features on it.
+# TODO (Mid) : With using db; add downloaded movies to another playlist named 'on_hold'.
+# TODO (Mid) : With using db; moving we watched and it's already in EXTERNAL_STORAGE to a directory in system and remove it from EXTERNAL_STORAGE, at the same time change details in db about it to prevent from downloading again and copying again. (monolithic procedure).
+
 chrome = ChromeController(CHROME_PATH)
 downloader = Downloader()
 file_handler = FileHandler(
     base_dir=BASE_DIR, 
 )
-
+# TODO (Low) : It can be a full procedure just for one single movie.
 chrome.main_page.goto(url=URLS["imdb_wl"])
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])
 movies_dl_links = chrome.get_dl_link(
@@ -34,16 +39,20 @@ chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
 
+# TODO (High) : Print a heading for downloading. 
+
 sp.call("clear", shell=True)
-for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all links in Downloader.
+for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloading all links in Downloader.
     if l is None:
         print(f'\n❌ Not found any link for "{n}"')
     else:
+        # TODO (Mid) : Move print stuff to downloader.get() method (before and after actual procedure)
+        # TODO (Mid) : Insert a '---\n' begin of printing. 
         print(f'\nDonwloading "{n}" ...')
         fp = downloader.get(l[0], SAVE_DIR)
         if fp:
             file_handler.downloaded_movies_fp.append(fp)
-        # TODO : Open a Thread for copying the file to `dest`.
+        # TODO (High) : Open a Thread for copying the file to `dest`.
         print(f"✅ {n} downloaded successfully!")
 
 external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"

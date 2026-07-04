@@ -1,1 +1,1 @@
-# TODO : make a notification procedure with a better way than plyer! to be usable for PTK for pyinstaller output. 
+# TODO (Low) : make a notification procedure with a better way than plyer! to be usable for PTK for pyinstaller output too. 

@@ -1,4 +1,4 @@
-# TODO : With `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread.
+# TODO (High) : With `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread.
 import shutil
 from pathlib import Path
 from tqdm import tqdm
@@ -70,13 +70,13 @@ class FileHandler:
         if dest_dir.is_file():
             print("Entered Path for 'dest_dir' is not a directory. Use path to a directory please.")
             return None
-        if not dest_dir.exists(): # TODO (low) : could be refactored to one line and delete if.
+        if not dest_dir.exists(): # TODO (Low) : could be refactored to one line and delete if.
             dest_dir.parent.mkdir(parents=True, exist_ok=True)
 
         dest_fp = dest_dir / src_fp.name
 
         if dest_fp.is_file() and dest_fp.exists():
-            # TODO (low): ask user for this situation, rewrite or skip?
+            # TODO (Low) : ask user for this situation, rewrite or skip?
             print(f"🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
             return None
 

@@ -1,6 +1,8 @@
 from playwright.sync_api import Playwright, sync_playwright, Page, Browser
 from pathlib import Path
 
+# TODO (Mid) : Implement Login to IMDb.
+# TODO (High) : try to use a user data instead of making a new each time. 
 
 class ChromeController:
     """
@@ -31,7 +33,7 @@ class ChromeController:
         self.pw: Playwright = sync_playwright().start()
         self.browser: Browser = self.pw.chromium.launch(
             executable_path=self.chrome_path,
-            headless=False,  # TODO : comment it and check when development was done.
+            headless=False, # TODO (Low) : make some research about headless attribute, use it if possible and do the same just without opening graphical browser. 
         )
         self.main_page: Page = self.browser.new_page()
 
@@ -133,7 +135,7 @@ class ChromeController:
             search_input_locator.press("Enter")
 
             if show_links_btn_locator.count() == 0 :
-                # TODO : make procedure to remove this films from Watchlist and added them to another playlist called 'Not_found' or 'Irani'
+                # TODO (Mid) : make procedure to remove this films from Watchlist and added them to another playlist called 'Not_found' or 'Irani'
                 links[m['name']] = None
             else:
                 show_links_btn_locator.first.click()

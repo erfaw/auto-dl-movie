@@ -47,7 +47,7 @@ class Downloader:
         file_path = path / file_name
 
         if file_path.is_file() and file_path.exists():
-            # TODO (low): ask user for this situation, rewrite or skip?
+            # TODO (Low): ask user for this situation, rewrite or skip?
             is_complete = False
             with rq.head(url) as r:
                 file_size_byte = int(r.headers['Content-Length'])
@@ -58,8 +58,8 @@ class Downloader:
                 return file_path
             else:
                 return None
-        # TODO : Implement resume feature for downlading. (if there is a file with that name already)
-        # TODO : Implement Error handling for ConnectoinError or Abort.
+        # TODO (Low) : Implement resume feature for downlading. (if there is a file with that name already)
+        # TODO (Mid) : Implement Error handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
             with open(file_path, 'wb') as file:
@@ -70,6 +70,7 @@ class Downloader:
                 ) as pb:
                     for chunk in response.iter_content(chunk_size=64*1024):
                         if chunk :
+                            # TODO (High) : It could write in EXTERNAL_STORAGE and current system at the same time, Think and Research about it. compare it with threading way.
                             file.write(chunk)
                             pb.update(len(chunk))
         return file_path
