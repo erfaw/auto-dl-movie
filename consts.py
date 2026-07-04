@@ -1,12 +1,26 @@
 from pathlib import Path
 from psutil import disk_partitions
+import sys
+import subprocess as sp
 
 
-EXTERNAL_STORAGE = Path([i.mountpoint for i in disk_partitions() if 'removable' in i.opts][0])
+sp.call('clear', shell=True)
+
+EXTERNAL_STORAGE = None
 """Path: Get the mounted drive for external storage which is connected in running of program. use `psutil.disk_partitions()`_ and its `mountpoint` attribute. then make a Path object from it.
 .. _psutil.disk_partitions():
     https://psutil.readthedocs.io/stable/index.html#psutil.disk_partitions
 """
+try:
+    EXTERNAL_STORAGE = Path(
+        [i.mountpoint for i in disk_partitions() if "removable" in i.opts][0]
+    )
+    print(f"EXTERNAL_STORAGE detected: '{EXTERNAL_STORAGE}'")
+except IndexError as e:
+    print(
+        f"Error: There is no EXTERNAL_STORAGE connected. connect at one least EXTERNAL_STORAGE to the system.\nJust one  for accuracy. more than 1 could be miss leading.\n\t (examples: USB Flash, HDD External, SSD External, mountable Phone or Tablet etc. must be in access through file explorers by yourself.)"
+    )
+    sys.exit(0)
 
 BASE_DIR = Path(__file__).resolve().parent
 """Path: current working directory of program on your system. 
