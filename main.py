@@ -46,12 +46,30 @@ for n, l in movies_dl_links.items(): # TODO : Make a method for downloading all 
         # TODO : Open a Thread for copying the file to `dest`.
         print(f"✅ {n} downloaded successfully!")
 
-# TODO : Start procedure of file copying.
-# free_space = file_handler.disk_info(EXTERNAL_STORAGE)['free'] * 1024 # type:ignore
+external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"
+external_storage_dir.mkdir(exist_ok=True)
 
-# dl_dir_whole_space = SAVE_DIR.stat().st_size
+for movie_fp in file_handler.downloaded_movies_fp:
 
-# if free_space > dl_dir_whole_space:
-#     print('we can do it on a row')
+    dest_fp = external_storage_dir / movie_fp.name
+    if (
+        dest_fp.is_file()
+        and dest_fp.exists()
+        and dest_fp.stat().st_size == movie_fp.stat().st_size
+    ):
+        print(
+            f"---\n🎭🌓'{dest_fp.name}' file already exists in '{external_storage_dir}' !"
+        )
+        continue
+
+    movie_size_MB = round(movie_fp.stat().st_size / 1024**2, 2)
+    free_size_external_storage = file_handler.disk_info(EXTERNAL_STORAGE)['free'] # type: ignore
+    if free_size_external_storage > movie_size_MB: 
+        file_handler.copy(
+            src_fp=movie_fp,
+            dest_dir=external_storage_dir,
+        )
+    else:
+        print(f"---\nThere is not enough space for '{movie_fp.name}' in {EXTERNAL_STORAGE}\n  file size    :   {movie_size_MB} MB\n  current free :   {free_size_external_storage} MB")
 
 input("Press anything to close.")
