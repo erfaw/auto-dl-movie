@@ -160,3 +160,39 @@ class FileHandler:
 
     def remove_dir(self):
         pass 
+
+    def get_dir_size(self, target_dir: Path) -> dict[str, float | dict[str, float]]:
+        """
+        Calcluate each file size and a overall size of a directory. using `Path().stats().st_size`_
+
+        Args:
+            target_dir (Path): Path object to where we want size details.
+
+        Returns:
+            dict[str, float | dict[str, float]]: include each file size and overall size of directory. unit is KB.
+
+        Examples:
+        >>> get_dir_size(BASE_DIR)
+        {
+            'overall_KB': 35.62,
+            'files_KB': {
+                'python_master_challenges(76_to_).ipynb': 25.06,
+                'README.md': 3.0,
+                'test_file_exercise_81.txt': 7.12,
+                'test_file_exercise_83.txt': 0.3,
+                'test_file_exercise_84_1.txt': 0.07,
+                'test_file_exercise_84_2.txt': 0.07
+            }
+        }
+
+        .. _Path().stats().st_size:
+            https://docs.python.org/3/library/pathlib.html#pathlib.Path.stat
+        """
+
+        r_dict = {}
+        r_dict['overall_KB'] = 0 
+        r_dict['files_KB'] = {}
+        for f in target_dir.rglob('*'):
+            r_dict['files_KB'][f.name] = round(f.stat().st_size / 1024, 2)
+            r_dict['overall_KB'] += r_dict['files_KB'][f.name]
+        return r_dict
