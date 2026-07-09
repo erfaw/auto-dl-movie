@@ -131,8 +131,32 @@ class FileHandler:
     def rename(self):
         pass
 
-    def copy_dir(self):
-        pass
+    def copy_dir(self, src_dir: Path, dest_dir: Path) -> Path:
+        """
+        Copy a directory with all files in it (without any ignore patterns for now) into a destination path. using `shutil.copytree()`_.
+
+        Args:
+            src_dir (Path): Path object which must be a directory to perform copytree().
+            dest_dir (Path): Path object which must be a directory to copy into it.
+
+        Returns:
+            Path: if performance was successful return directory path object of copied directory.
+
+        .. _shutil.copytree():
+            https://docs.python.org/3/library/shutil.html#shutil.copytree
+        """
+        dest_dir = dest_dir / src_dir.name
+        dest_dir.mkdir(exist_ok=True)
+        if not src_dir.exists() or not src_dir.is_dir():
+            raise AttributeError(f"{src_dir} does not exist or not a directory.\nError message")
+        else:
+            shutil.copytree(
+                src=src_dir,
+                dst=dest_dir,
+                ignore=None,
+                dirs_exist_ok=True,
+            )
+            return Path(dest_dir)
 
     def remove_dir(self):
         pass 
