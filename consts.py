@@ -16,7 +16,7 @@ EXTERNAL_STORAGE = None
 .. _psutil.disk_partitions():
     https://psutil.readthedocs.io/stable/index.html#psutil.disk_partitions
 """
-if sys.platform.startswith('win'):
+if sys.platform.startswith('win'): # TODO : Check functionality in windows.
     try:
         EXTERNAL_STORAGE = Path(
             [i.mountpoint for i in disk_partitions() if "removable" in i.opts][0]
