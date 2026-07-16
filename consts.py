@@ -1,24 +1,49 @@
 from pathlib import Path
 from psutil import disk_partitions
-import sys
+import sys, os
 import subprocess as sp
 
 
 sp.call('clear', shell=True)
 
 EXTERNAL_STORAGE = None
-"""Path: Get the mounted drive for external storage which is connected in running of program. use `psutil.disk_partitions()`_ and its `mountpoint` attribute. then make a Path object from it.
+"""Path: Get the mounted drive for external storage which is connected in running of program.
+
+* for Windows: use `psutil.disk_partitions()`_ and its `mountpoint` attribute. then make a Path object from it.
+
+* for Linux: search for first occure in Path('/run/media/{username}').
+
 .. _psutil.disk_partitions():
     https://psutil.readthedocs.io/stable/index.html#psutil.disk_partitions
 """
-try:
-    EXTERNAL_STORAGE = Path(
-        [i.mountpoint for i in disk_partitions() if "removable" in i.opts][0]
-    )
-    print(f"EXTERNAL_STORAGE detected: '{EXTERNAL_STORAGE}'")
-except IndexError as e:
+if sys.platform.startswith('win'):
+    try:
+        EXTERNAL_STORAGE = Path(
+            [i.mountpoint for i in disk_partitions() if "removable" in i.opts][0]
+        )
+        print(f"EXTERNAL_STORAGE detected: '{EXTERNAL_STORAGE}'")
+    except IndexError as e:
+        print(
+            f"Error: There is no EXTERNAL_STORAGE connected. connect at one least EXTERNAL_STORAGE to the system.\nJust one  for accuracy. more than 1 could be miss leading.\n\t (examples: USB Flash, HDD External, SSD External, mountable Phone or Tablet etc. must be in access through file explorers by yourself.)"
+        )
+        sys.exit(0)
+
+elif sys.platform == 'linux':
+    username = os.getlogin()
+    MOUNTPOINT_DIR = Path(f'/run/media/{username}').resolve()
+    try:
+        EXTERNAL_STORAGE = Path(
+            list(MOUNTPOINT_DIR.glob('*'))[0]
+        )
+        print(f"EXTERNAL_STORAGE detected: '{EXTERNAL_STORAGE.name}'")
+    except IndexError as e:
+        print(
+            f"Error: There is no EXTERNAL_STORAGE connected. connect at one least EXTERNAL_STORAGE to the system.\nJust one  for accuracy. more than 1 could be miss leading.\n\t (examples: USB Flash, HDD External, SSD External, mountable Phone or Tablet etc. must be in access through file explorers by yourself.)\n* NOTE : program try to find your USB in {MOUNTPOINT_DIR} currently."
+        )
+        sys.exit(0)
+else:
     print(
-        f"Error: There is no EXTERNAL_STORAGE connected. connect at one least EXTERNAL_STORAGE to the system.\nJust one  for accuracy. more than 1 could be miss leading.\n\t (examples: USB Flash, HDD External, SSD External, mountable Phone or Tablet etc. must be in access through file explorers by yourself.)"
+        "Error: Your system is un-supported by this program."
     )
     sys.exit(0)
 
