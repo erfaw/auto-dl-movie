@@ -58,6 +58,8 @@ This is for usage without `playwright install` stuff. (because we have geoblocke
 
 If it's okay to run that command, feel free to set this to `None` to use default way.
 """
+if sys.platform == 'linux': # TODO : good to be added in if-elif-statement for win/linux.
+    CHROME_PATH = Path(r"/snap/chromium/3491/usr/lib/chromium-browser/chrome")
 
 XPATH = {
     "imdb_wl": {
