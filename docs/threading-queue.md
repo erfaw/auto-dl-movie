@@ -87,3 +87,96 @@ in my point of view i need to use threading module in combination with queue mod
 >>    * Running blocking code (`asyncio.to_thread()`)
 >> 
 >> For your project, **`threading` + `queue`** is exactly the combination you should master first. Once you're comfortable with that, learning `asyncio` will be much easier because you'll already understand concurrent program design.
+
+---
+
+## Reading [`threading`](https://docs.python.org/3.12/library/threading.html#module-threading)
+
+[short intro](https://docs.python.org/3.12/tutorial/stdlib2.html#multi-threading)
+
+simple example of zipping a file in bg:
+```
+import threading, zipfile
+
+class AsyncZip(threading.Thread):
+    def __init__(self, infile, outfile):
+        threading.Thread.__init__(self)
+        self.infile = infile
+        self.outfile = outfile
+
+    def run(self):
+        f = zipfile.ZipFile(self.outfile, 'w', zipfile.ZIP_DEFLATED)
+        f.write(self.infile)
+        f.close()
+        print('Finished background zip of:', self.infile)
+
+background = AsyncZip('mydata.txt', 'myarchive.zip')
+background.start()
+print('The main program continues to run in foreground.')
+
+background.join()    # Wait for the background task to finish
+print('Main program waited until background was done.')
+```
+
+when i think about combination of threading and queue, which talks to each other in this way, APIs in web came in my mind. 
+
+* [threading.enumerate()](https://docs.python.org/3.12/library/threading.html#threading.enumerate): Return a list of all Thread objects currently active.
+* [threading.current_thread()](https://docs.python.org/3.12/library/threading.html#threading.current_thread): Return the current Thread object
+* [threading.active_count()](https://docs.python.org/3.12/library/threading.html#threading.active_count): Return the number of Thread objects currently alive.
+
+threading.enumerate() Return a list of all Thread objects currently active. The list includes daemonic threads and dummy thread objects created by current_thread(). It excludes terminated threads and threads that have not yet been started. However, the main thread is always part of the result, even when terminated.
+> `ChatGPT`
+>> threading.enumerate() returns all Python Thread objects that are alive within the process that called it. It does not list threads from other Python processes or from the operating system (Windows/Linux) as a whole.
+
+### what is a daemon thread?
+> `ChatGPT`
+>> A **daemon thread** is a **background thread** that runs alongside your main program.
+>> * It performs supporting work (e.g., logging, monitoring, cleanup).
+>> * When **all non-daemon threads finish**, Python **automatically stops** daemon threads, even if they're still running.
+>> * Use daemon threads only for tasks that don't need to finish before the program exits.
+
+### What is a `Lock` object in `threading`?
+> `ChatGPT`
+>> A **`Lock`** is a synchronization object that lets **only one thread** access a shared resource (critical section) at a time.
+>> * Prevents **race conditions** when multiple threads modify the same data.
+>> * A thread **acquires** the lock before entering the critical section.
+>> * Other threads must **wait** until the lock is **released**.
+>> * Think of it as a **room key**: only the thread holding the key can enter the room.
+
+### What is a `Semaphore` object?
+> `ChatGPT`
+>> A **`Semaphore`** is a synchronization object that allows **up to N threads** to access a shared resource at the same time.
+>> * Unlike a `Lock` (1 thread), a semaphore permits **multiple threads**.
+>> * It maintains an internal **counter** (e.g., 3).
+>> * Each `acquire()` decreases the counter; each `release()` increases it.
+>> * When the counter reaches **0**, additional threads wait until one releases the semaphore.
+>> * Example: limit access to **3 database connections** or **5 download slots** simultaneously.
+
+
+### What is an `Event` object?
+> `ChatGPT`
+>> An **`Event`** is a synchronization object used to **signal** between threads.
+>> * One thread calls `event.set()` to signal.
+>> * Other threads call `event.wait()` and block until the event is set.
+>> * Useful for "start now", "stop now", or "ready" notifications.
+
+---
+
+### What is a `Timer` object?
+> `ChatGPT`
+>> A **`Timer`** is a thread that **waits for a specified delay**, then runs a function.
+>> * Similar to `time.sleep()`, but runs in its **own thread**.
+>> * Can be **canceled** before it executes.
+>> * Useful for delayed tasks.
+
+---
+
+### What is a `Barrier` object?
+> `ChatGPT`
+>> A **`Barrier`** makes **multiple threads wait** until all of them reach the same point.
+>> * You specify the number of participating threads.
+>> * Each thread calls `barrier.wait()`.
+>> * When all have arrived, they all continue together.
+>> * Useful for synchronizing phases of parallel work.
+
+---
