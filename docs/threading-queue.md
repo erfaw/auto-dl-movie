@@ -180,3 +180,51 @@ threading.enumerate() Return a list of all Thread objects currently active. The 
 >> * Useful for synchronizing phases of parallel work.
 
 ---
+
+## Reading [`An Intro to Threading in Python`](https://realpython.com/intro-to-python-threading/)
+
+In computer science, a daemon is a process that runs in the background.
+
+Python threading has a more specific meaning for daemon. A daemon thread will shut down immediately when the program exits. One way to think about these definitions is to consider the daemon thread a thread that runs in the background without worrying about shutting it down.
+
+You do that by changing how you construct the Thread, adding the daemon=True flag:
+```
+x = threading.Thread(target=thread_function, args=(1,), daemon=True)
+```
+
+It was a daemon thread, so when __main__ reached the end of its code and the program wanted to finish, the daemon was killed.
+
+If you walk through the output carefully, you’ll see all three threads getting started in the order you might expect, but in this case they finish in the opposite order! Multiple runs will produce different orderings. Look for the Thread x: finishing message to tell you when each thread is done.
+The order in which threads are run is determined by the operating system and can be quite hard to predict. It may (and likely will) vary from run to run, so you need to be aware of that when you design algorithms that use threading.
+
+### [Using a `ThreadPoolExecutor`](https://realpython.com/intro-to-python-threading/#using-a-threadpoolexecutor)
+
+```
+import concurrent.futures
+
+# [rest of code]
+
+if __name__ == "__main__":
+    format = "%(asctime)s: %(message)s"
+    logging.basicConfig(format=format, level=logging.INFO,
+                        datefmt="%H:%M:%S")
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        executor.map(thread_function, range(3))
+```
+
+The end of the with block causes the ThreadPoolExecutor to do a .join() on each of the threads in the pool.
+
+Note: Using a ThreadPoolExecutor can cause some confusing errors.
+For example, if you call a function that takes no parameters, but you pass it parameters in .map(), the thread will throw an exception.
+Unfortunately, ThreadPoolExecutor will hide that exception, and (in the case above) the program terminates with no output. This can be quite confusing to debug at first.
+
+Note : we can't controll order of doning threads, but with ThreadPoolExecutor we have same procedure each time. 
+
+.submit() has a signature that allows both positional and named arguments to be passed to the function running in the thread:
+```.submit(function, *args, **kwargs)
+```
+
+# Progress: till [HERE](https://realpython.com/intro-to-python-threading/#one-thread)
+
+---
