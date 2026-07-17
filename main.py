@@ -1,4 +1,5 @@
 from pathlib import Path
+from threading import Thread
 from chrome_controller import ChromeController
 from downloader import Downloader
 from file_handler import FileHandler
@@ -38,10 +39,36 @@ movies_dl_links = chrome.get_dl_link(
 chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
+external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"
+external_storage_dir.mkdir(exist_ok=True)
+
+def thread_copy(movie_fp):
+    dest_fp = external_storage_dir / movie_fp.name
+    if (
+        dest_fp.is_file()
+        and dest_fp.exists()
+        and dest_fp.stat().st_size == movie_fp.stat().st_size
+    ):
+        print(
+            f"---\n🎭🌓'{dest_fp.name}' file already exists in '{external_storage_dir}' !"
+        )
+    else:
+        movie_size_MB = round(movie_fp.stat().st_size / 1024**2, 2)
+        free_size_external_storage = file_handler.disk_info(EXTERNAL_STORAGE)['free'] # type: ignore
+        if free_size_external_storage > movie_size_MB: 
+            file_handler.copy(
+                src_fp=movie_fp,
+                dest_dir=external_storage_dir,
+            )
+        else:
+            print(f"---\nThere is not enough space for '{movie_fp.name}' in {EXTERNAL_STORAGE}\n  file size    :   {movie_size_MB} MB\n  current free :   {free_size_external_storage} MB")
+
 
 # TODO (High) : Print a heading for downloading. 
 
 sp.call("clear", shell=True)
+
+threads = []
 for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloading all links in Downloader.
     if l is None:
         print(f'\n❌ Not found any link for "{n}"')
@@ -52,33 +79,15 @@ for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloadin
         fp = downloader.get(l[0], SAVE_DIR)
         if fp:
             file_handler.downloaded_movies_fp.append(fp)
+            background_copy_thread = Thread(target=thread_copy, args=(fp,))
+            # TODO: Check the reason of delay of done tick of copy.
+            threads.append(background_copy_thread)
+            background_copy_thread.start()
         # TODO (High) : Open a Thread for copying the file to `dest`.
+        # print(f"✅ {n} downloaded successfully!")
         print(f"✅ {n} downloaded successfully!")
 
-external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"
-external_storage_dir.mkdir(exist_ok=True)
-
-for movie_fp in file_handler.downloaded_movies_fp:
-
-    dest_fp = external_storage_dir / movie_fp.name
-    if (
-        dest_fp.is_file()
-        and dest_fp.exists()
-        and dest_fp.stat().st_size == movie_fp.stat().st_size
-    ):
-        print(
-            f"---\n🎭🌓'{dest_fp.name}' file already exists in '{external_storage_dir}' !"
-        )
-        continue
-
-    movie_size_MB = round(movie_fp.stat().st_size / 1024**2, 2)
-    free_size_external_storage = file_handler.disk_info(EXTERNAL_STORAGE)['free'] # type: ignore
-    if free_size_external_storage > movie_size_MB: 
-        file_handler.copy(
-            src_fp=movie_fp,
-            dest_dir=external_storage_dir,
-        )
-    else:
-        print(f"---\nThere is not enough space for '{movie_fp.name}' in {EXTERNAL_STORAGE}\n  file size    :   {movie_size_MB} MB\n  current free :   {free_size_external_storage} MB")
+for t in threads:
+    t.join()
 
 input("Press anything to close.")
