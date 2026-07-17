@@ -67,6 +67,8 @@ class Downloader:
                     total=int(response.headers['Content-Length']),
                     unit='B',
                     unit_scale=True,
+                    # unit_divisor=1024, # TODO : Enable this codes and remove print statements.
+                    # desc=src_fp.name,
                 ) as pb:
                     for chunk in response.iter_content(chunk_size=64*1024):
                         if chunk :
