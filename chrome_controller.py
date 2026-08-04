@@ -1,8 +1,6 @@
 from playwright.sync_api import Playwright, sync_playwright, Page, Browser
 from pathlib import Path
 
-# TODO (Mid) : Implement Login to IMDb.
-# TODO (High) : try to use a user data instead of making a new each time. 
 
 class ChromeController:
     """

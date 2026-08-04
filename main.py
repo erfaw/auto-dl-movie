@@ -99,7 +99,6 @@ for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloadin
             # TODO: Check the reason of delay of done tick of copy.
             threads.append(background_copy_thread)
             background_copy_thread.start()
-        # TODO (High) : Open a Thread for copying the file to `dest`.
         # print(f"✅ {n} downloaded successfully!")
         print(f"✅ {n} downloaded successfully!")
 

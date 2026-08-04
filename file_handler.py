@@ -1,4 +1,3 @@
-# TODO (High) : With `threading parallelism` make io file copying a thread, io file downloading a thread and these 2 threads must talking to each other through a Queue with main thread.
 import shutil
 from pathlib import Path
 from tqdm import tqdm
