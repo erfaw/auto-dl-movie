@@ -75,7 +75,7 @@ class FileHandler:
         dest_fp = dest_dir / src_fp.name
 
         if dest_fp.is_file() and dest_fp.exists():
-            print(f"\n🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
+            print(f"🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
             return None
 
         if dest_fp.name == src_fp.name:
@@ -84,7 +84,7 @@ class FileHandler:
                 src=src_fp,
                 dst=dest_fp,
             )
-            print(f"\n✅ Successfully copied '{dest_fp.name}'")
+            print(f"✅ Successfully copied '{dest_fp.name}'")
         else:
             raise RuntimeError
 
