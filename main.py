@@ -87,7 +87,7 @@ sp.call("clear", shell=True)
 threads = []
 for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloading all links in Downloader.
     if l is None:
-        print(f'\n❌ Not found any link for "{n}"')
+        print(f'❌ Not found any link for "{n}"')
     else:
         # TODO (Mid) : Move print stuff to downloader.get() method (before and after actual procedure)
         # TODO (Mid) : Insert a '---\n' begin of printing. 
