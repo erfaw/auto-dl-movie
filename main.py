@@ -91,16 +91,12 @@ for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloadin
     else:
         # TODO (Mid) : Move print stuff to downloader.get() method (before and after actual procedure)
         # TODO (Mid) : Insert a '---\n' begin of printing. 
-        print(f'\nDonwloading "{n}" ...')
         fp = downloader.get(l[0], SAVE_DIR)
         if fp:
             file_handler.downloaded_movies_fp.append(fp)
             background_copy_thread = Thread(target=thread_copy, args=(fp,))
-            # TODO: Check the reason of delay of done tick of copy.
             threads.append(background_copy_thread)
             background_copy_thread.start()
-        # print(f"✅ {n} downloaded successfully!")
-        print(f"✅ {n} downloaded successfully!")
 
 for t in threads:
     t.join()
