@@ -105,4 +105,5 @@ for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloadin
 for t in threads:
     t.join()
 
+send_plyer(title="auto-dl-movie", message="COMPLETED! ✅")
 input("Press anything to close.")
