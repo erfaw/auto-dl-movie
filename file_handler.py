@@ -80,6 +80,7 @@ class FileHandler:
 
         if dest_fp.name == src_fp.name:
             dest_fp.parent.mkdir(exist_ok=True)
+            print(f"Start copy '{dest_fp.name}'...")
             shutil.copy2(
                 src=src_fp,
                 dst=dest_fp,
