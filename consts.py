@@ -65,6 +65,7 @@ XPATH = {
     "imdb_wl": {
         "ul_container": r'//*[@id="__next"]/main/div/section/div/section/div/div[1]/section/div[2]/ul',
         "year": "xpath=/div/div/div/div[1]/div[2]/div[2]/ul/li[1]",
+        "confirm_human": "//*[contains(normalize-space(.), 'confirm you are human')]",
     },
     "donyaye_serial": {
         "dynamic_archive": {
