@@ -59,7 +59,7 @@ class Downloader:
             else:
                 return None
         # TODO (Low) : Implement resume feature for downlading. (if there is a file with that name already)
-        # TODO (Mid) : Implement Error handling for ConnectoinError or Abort.
+        # TODO (HIGH) : Implement Error handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
             with open(file_path, 'wb') as file:
