@@ -48,7 +48,7 @@ class FileHandler:
 
     def copy(self, src_fp: Path, dest_dir: Path) -> None:
         """
-        It validates `src_fp` and `dest_dir` then calls `_copy_with_progress_bar()`.
+        It validates `src_fp` and `dest_dir` then calls shutil.copy2()
 
         Args:
             src_fp(Path):
@@ -59,7 +59,6 @@ class FileHandler:
         Returns:
             None
         """ 
-        # TODO : Remove print statements and let just preffix of tqdm talks to user.
         if not src_fp.exists():
             print(f"This source does not exist. Entered Path: '{src_fp}'")
             return None
@@ -76,22 +75,25 @@ class FileHandler:
         dest_fp = dest_dir / src_fp.name
 
         if dest_fp.is_file() and dest_fp.exists():
-            # TODO (Low) : ask user for this situation, rewrite or skip?
-            print(f"🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
+            print(f"\n🎭🌓'{dest_fp.name}' file already exists in dest_dir!")
             return None
 
         if dest_fp.name == src_fp.name:
             dest_fp.parent.mkdir(exist_ok=True)
-
-            print(f"---\nstart copying...\n\tsrc: '{src_fp}'\n\tdest_fp: '{dest_dir}'")
-            self._copy_with_progress_bar(src_fp, dest_fp, )
-            print("✅done")
+            shutil.copy2(
+                src=src_fp,
+                dst=dest_fp,
+            )
+            print(f"\n✅ Successfully copied '{dest_fp.name}'")
         else:
             raise RuntimeError
 
     def _copy_with_progress_bar(self, src_fp: Path, dest_fp: Path) -> None:
         """
         Use `open()` and read/write with chunks to copy a file from src to dest_dir.
+
+        Note:
+            Has a problem with copying to EXTERNAL_STORAGES, does not shows right.
 
         Args:
             src_fp (Path):
