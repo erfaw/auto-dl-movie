@@ -13,6 +13,8 @@ from consts import (
     BASE_DIR,
     EXTERNAL_STORAGE,
 )
+from notification import send_plyer
+from playwright.sync_api import TimeoutError
 
 
 # TODO (Mid) : Design and implement Database with sqlite and SQLAlchemy to somehow program remebers what it did before and make it possible to implement some more specific features on it.
@@ -26,6 +28,20 @@ file_handler = FileHandler(
 )
 # TODO (Low) : It can be a full procedure just for one single movie.
 chrome.main_page.goto(url=URLS["imdb_wl"])
+
+try:
+    chrome.main_page.wait_for_selector(
+        XPATH["imdb_wl"]["confirm_human"],
+        timeout=5000,
+        state='visible',
+    )
+except TimeoutError:
+    print("Doesn't occur any human check.")
+else:
+    message = "please complete confirmation, then press enter"
+    send_plyer(title="auto-dl-movie", message=message)
+    input(message)
+
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])
 movies_dl_links = chrome.get_dl_link(
     URLS,
@@ -64,7 +80,7 @@ def thread_copy(movie_fp):
             print(f"---\nThere is not enough space for '{movie_fp.name}' in {EXTERNAL_STORAGE}\n  file size    :   {movie_size_MB} MB\n  current free :   {free_size_external_storage} MB")
 
 
-# TODO (High) : Print a heading for downloading. 
+# TODO (High) : Print a heading for downloading.
 
 sp.call("clear", shell=True)
 
