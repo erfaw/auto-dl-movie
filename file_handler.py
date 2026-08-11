@@ -85,7 +85,7 @@ class FileHandler:
                 src=src_fp,
                 dst=dest_fp,
             )
-            print(f"✅ Successfully copied '{dest_fp.name}'")
+            print(f"\n✅ Successfully copied '{dest_fp.name}'")
         else:
             raise RuntimeError
 
