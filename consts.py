@@ -90,11 +90,9 @@ URLS = {
 this organization mostly is for be scalable for future!
 """
 
-SAVE_DIR = Path().home() / "Desktop" / "auto-movie-downloader"
-"""Path: default is to your desktop in windows and in other OS idk :) .
-
->>> Users/<Your User>/Dekstop/auto-movie-downloader
-
+SAVE_DIR = Path().home() / "Desktop" / "auto-dl-movie"
+"""Path: default is to your desktop.
+>>> Users/<Your User>/Dekstop/auto-dl-movie
 """
 
 PREFER = {
