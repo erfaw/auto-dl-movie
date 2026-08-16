@@ -43,6 +43,7 @@ else:
     input(message)
 
 movies = chrome.get_movies_list(XPATH["imdb_wl"]["ul_container"], XPATH["imdb_wl"]["year"])
+# input("change network if you want")
 movies_dl_links = chrome.get_dl_link(
     URLS,
     movies,
