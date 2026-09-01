@@ -49,8 +49,14 @@ class Downloader:
         if file_path.is_file() and file_path.exists():
             # TODO (Low): ask user for this situation, rewrite or skip?
             is_complete = False
+            content_length = None
             with rq.head(url) as r:
-                file_size_byte = int(r.headers['Content-Length'])
+                # if r.status_code == 200: # TODO (HIGH) check status_code before each action, and raise error or pass None for that situation.
+                try:
+                    content_length = r.headers['Content-Length']
+                except KeyError:
+                    content_length = -1
+                file_size_byte = int(content_length)
                 if file_size_byte <= file_path.stat().st_size:
                     is_complete = True
             print(f"\t🎭🌓'{file_path.name}' file already exists in dest_dir!\n\t(download is_complete: {is_complete})")
@@ -62,9 +68,15 @@ class Downloader:
         # TODO (HIGH) : Implement Error handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
+            content_length = None
+            try:
+                content_length = response.headers['Content-Length']
+            except KeyError:
+                content_length = -1
+            file_size_byte = int(content_length)
             with open(file_path, 'wb') as file:
                 with tqdm(
-                    total=int(response.headers['Content-Length']),
+                    total=file_size_byte,
                     unit='B',
                     unit_scale=True,
                     unit_divisor=1024,
