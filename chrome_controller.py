@@ -86,6 +86,7 @@ class ChromeController:
         search_xpath: str,
         show_links_btn_text: str,
         mkv_links: str,
+        mp4_links: str,
         resolution: str,
         dub_or_sub: str,
     ) -> dict:
@@ -98,6 +99,7 @@ class ChromeController:
             search_xpath (str): raw string to locating search input with `XPATH`.
             show_links_btn_text (str): raw string to use with `Page.get_by_text()` and get a particular button.
             mkv_links (str): CSS selector which selects just `*.mkv` links from <a> tags.
+            mp4_links (str): CSS selector which selects just `*.mp4` links from <a> tags.
             resolution (str): About resolution for filtering downlaod links.
                 (mostly added to be able more dynamicly change this when it's not working anymore.)
             dub_or_sub (str): About dubbed or subtitle for filtering downlaod links.
@@ -138,7 +140,7 @@ class ChromeController:
             else:
                 show_links_btn_locator.first.click()
 
-                all_links_locator = self.main_page.locator(mkv_links).all()
+                all_links_locator = self.main_page.locator(f"{mkv_links}, {mp4_links}").all()
                 all_links = [link.get_attribute('href') for link in all_links_locator]
 
                 filtered_links = [ l for l in all_links if resolution in l and dub_or_sub in l ] # type: ignore
