@@ -31,7 +31,7 @@ class ChromeController:
         self.pw: Playwright = sync_playwright().start()
         self.browser: Browser = self.pw.chromium.launch(
             executable_path=self.chrome_path,
-            headless=False, # TODO (Low) : make some research about headless attribute, use it if possible and do the same just without opening graphical browser. 
+            headless=False, 
         )
         self.main_page: Page = self.browser.new_page()
 
