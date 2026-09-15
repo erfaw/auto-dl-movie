@@ -41,13 +41,14 @@ class ChromeController:
         """
         self.pw.stop()
 
-    def get_movies_list(self, ul_selector, year_xpath):
+    def get_movies_list(self, ul_selector, year_xpath, movie_count: int):
         """
-        Scrape all movies and slice 5 first then return.
+        Scrape all movies and slice equal movie_count from first then return.
 
         Args:
             ul_selector: XPath or css selector of some element in DOM.
             year_xpath: XPath for selecting year in imdb_wl page.
+            movie_count (int): How many movies you want to download from IMDb Watchlist.
 
         Returns:
             list[dict]: return a list of dicts contain movies detail.
@@ -55,7 +56,7 @@ class ChromeController:
         ul_continer = self.main_page.locator(ul_selector)
         ul_continer.wait_for()
         li_first_child_selector = "> li"
-        movies = ul_continer.locator(li_first_child_selector).all()[:5]
+        movies = ul_continer.locator(li_first_child_selector).all()[:movie_count+1]
 
         r_movie = []
         for m in movies:
