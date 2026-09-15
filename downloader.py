@@ -13,7 +13,6 @@ class Downloader:
             https://requests.readthedocs.io/en/latest/#
         """
 
-
     def get(self, url: str, path: Path) -> Path | None:
         """
         Starting download a file of any type to given path using `stream=True`_ and `Streaming Requests`_ .
@@ -23,7 +22,7 @@ class Downloader:
         With power of `tqdm`_ package shows a nice progress bar in terminal.
 
         Note:
-            returns the Path object even file exists from past and is complete.
+            returns the Path object even file exists from past and is complete. Continues download for uncomplete files if it is possible.
 
         Args:
             url(str):
@@ -47,7 +46,7 @@ class Downloader:
         file_path = path / file_name
 
         if file_path.is_file() and file_path.exists():
-            # TODO (Low): ask user for this situation, rewrite or skip?
+            current_size_byte = file_path.stat().st_size
             is_complete = False
             content_length = None
             with rq.head(url) as r:
@@ -57,14 +56,37 @@ class Downloader:
                 except KeyError:
                     content_length = -1
                 file_size_byte = int(content_length)
-                if file_size_byte <= file_path.stat().st_size:
+                if file_size_byte == file_path.stat().st_size:
                     is_complete = True
             print(f"\t🎭🌓'{file_path.name}' file already exists in dest_dir!\n\t(download is_complete: {is_complete})")
             if is_complete:
                 return file_path
-            else:
-                return None
-        # TODO (Low) : Implement resume feature for downlading. (if there is a file with that name already)
+
+            else:  # Continue download ...
+                with rq.get(
+                    url, stream=True, headers={"Range": f"bytes={current_size_byte}-"}
+                ) as response:
+                    if response.status_code == 206:
+                        file_size_byte = int(content_length)
+                        with open(file_path, "ab") as file:
+                            with tqdm(  # TODO (HIGH) Fix tqdm progress bar on continue download. i suspect unit_scale.
+                                total=file_size_byte,
+                                initial=current_size_byte,
+                                unit="B",
+                                unit_scale=True,
+                                unit_divisor=1024,
+                                desc=file_path.name[: 25 + 1],
+                            ) as pb:
+                                for chunk in response.iter_content(
+                                    chunk_size=64 * 1024
+                                ):
+                                    if chunk:
+                                        file.write(chunk)
+                                        pb.update(len(chunk))
+                    else:
+                        return None
+                return file_path
+
         # TODO (HIGH) : Implement Error handling for ConnectoinError or Abort.
 
         with rq.get(url, stream=True) as response:
@@ -80,11 +102,10 @@ class Downloader:
                     unit='B',
                     unit_scale=True,
                     unit_divisor=1024,
-                    desc=file_path.name,
+                    desc=file_path.name[:25+1],
                 ) as pb:
                     for chunk in response.iter_content(chunk_size=64*1024):
                         if chunk :
                             file.write(chunk)
                             pb.update(len(chunk))
         return file_path
-
