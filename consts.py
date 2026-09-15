@@ -26,7 +26,14 @@ if sys.platform.startswith('win'):
         print(
             f"Error: There is no EXTERNAL_STORAGE connected. connect at one least EXTERNAL_STORAGE to the system.\nJust one  for accuracy. more than 1 could be miss leading.\n\t (examples: USB Flash, HDD External, SSD External, mountable Phone or Tablet etc. must be in access through file explorers by yourself.)"
         )
-        sys.exit(0)
+        is_continue = input("Would you like to just download on this system? (y/n)").lower().strip()
+        if is_continue == "n":
+            sys.exit(0)
+        elif is_continue == "y":
+            EXTERNAL_STORAGE = None
+        else:
+            print("We consider this as a No. Goodbye!")
+            sys.exit(0)
 
 elif sys.platform == 'linux':
     username = os.getlogin()
