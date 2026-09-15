@@ -57,8 +57,9 @@ movies_dl_links = chrome.get_dl_link(
 chrome.close()
 
 SAVE_DIR.mkdir(exist_ok=True)
-external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"
-external_storage_dir.mkdir(exist_ok=True)
+if EXTERNAL_STORAGE:
+    external_storage_dir = EXTERNAL_STORAGE / "auto-dl-movie"
+    external_storage_dir.mkdir(exist_ok=True)
 
 def thread_copy(movie_fp):
     dest_fp = external_storage_dir / movie_fp.name
@@ -96,12 +97,14 @@ for n, l in movies_dl_links.items(): # TODO (Low) : Make a method for downloadin
         fp = downloader.get(l[0], SAVE_DIR)
         if fp:
             file_handler.downloaded_movies_fp.append(fp)
-            background_copy_thread = Thread(target=thread_copy, args=(fp,))
-            threads.append(background_copy_thread)
-            background_copy_thread.start()
+            if EXTERNAL_STORAGE:
+                background_copy_thread = Thread(target=thread_copy, args=(fp,))
+                threads.append(background_copy_thread)
+                background_copy_thread.start()
 
-for t in threads:
-    t.join()
+if EXTERNAL_STORAGE:
+    for t in threads:
+        t.join()
 
 send_plyer(title="auto-dl-movie", message="COMPLETED! ✅")
 input("Press anything to close.")
